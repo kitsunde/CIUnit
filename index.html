@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+
+<head>
+  <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-1">
+  <title>Intro to CIUnit (part of fooStack) for CodeIgniter</title>
+</head>
+
+<body>
+<!--
+/*
+* fooStack, Codeigniter Plugin for Unit testing and more
+* version v0.12
+* Copyright (c) 2008 Clemens Gruenberger,
+* <clem@fragment.at>
+* Released with permission from www.redesignme.com, thanks guys!
+* Released under the MIT license, see:
+* http://www.opensource.org/licenses/mit-license.php
+*/
+-->
+
+<h1>fooStack for CodeIgniter</h1>
+<h2>CIUnit: Unit testing for CodeIgniter</h2>
+<p>
+CIUnit is a cool bridge between your CodeIgniter application and phpUnit.
+</p>
+
+
+<ul>
+  <li>CodeIgniter 1.62+/</li>
+  <li>PHP 5+</li>
+</ul>
+
+<p><a href="fooStack_v0.12.zip">Download the current <b>fooStack v0.12</b> here!</a></p>
+<p style='font-size: 0.8em'>( older versions here: <a href="fooStack_v0.10.zip">fooStack v0.10</a>, <a href="fooStack_v0.11.zip">fooStack v0.11</a> )</p>
+
+<p>
+Install it as follows:
+</p>
+<ol>
+  <li>Copy the fooStack directory in your YourProject/system/application/libraries directory</li>
+  <li>Copy the tests directory in your YourProject/system/application directory</li>
+  <li>Replace the CodeIgniter.php file in your YourProject/system/codeigniter directory with the one of the package</li>  
+  <li>replace the line that starts with <pre>$active_group =</pre> in your database.php (YourProject/system/application/config directory) with:<br />
+<pre>
+$env_used = 'default'; //where default would be the name of your development setting
+if(defined('CIUnit_Version')){
+  $env_used .= '_test';
+}
+$active_group = $env_used;</pre></li>
+  
+  <li>Create a new database setting that will act as the test database (it will always be cleared when you run tests!), 
+  that is named like your development setting but with a trailing '_test'. <b>Note:</b> CIUnit fixtures will ask for the trailing '_test' to prevent accidental data loss.</li> 
+    
+</ol>
+
+<p><b> Congratulations you are done with installing fooStack!</b></p>
+<p>Oh, wait, do you have phpUnit already installed?</p> 
+<p><a href="http://www.phpunit.de/pocket_guide/3.2/en/installation.html">http://www.phpunit.de/pocket_guide/3.2/en/installation.html</a></p>
+
+<p>Once you have fooStack and phpUnit running:</p>
+
+<h3>Run tests:</h3>
+<ul>
+  <li>Run all tests from within the tests directory: "phpunit AllTests.php", or use "phpunit --verbose AllTests.php" to get more detailed output</li>
+  <li>Run only a subgroup of tests, eg model tests, go into the tests/models directory and run "phpunit ModelAllTests.php"</li>
+  <li>Consequently, for running just one particular test, change to this test's directory and type "phpunit testSomeStuff.php"</li>  
+</ul>
+
+<h3>Generate fixtures:</h3>
+<p>
+Given you have tables in your test database (you should have the same as in the development database!), you can generate empty yaml fixtures like so:
+From within the tests directory type:
+<pre>php generate fixtures</pre>, 
+the fixture files are then available in the fixtures directory
+</p>
+
+<h3>CIUnit tests itself</h3>
+<p>
+Without writing any tests, typing "phpunit AllTests.php" will already run a couple of tests - these make sure that CIUnit is correctly installed and works as expected.
+You can always tell CIUnit later on not to run these tests, probably because you want to speed up your test suites.
+</p>
+
+
+</body>
+
+</html>
