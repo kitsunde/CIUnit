@@ -1,12 +1,5 @@
 <?php
 
-/*
-* fooStack, Fixture Class
-* Copyright (c) 2008 Clemens Gruenberger
-* Released with permission from www.redesignme.com, thanks guys!
-* Released under the MIT license, see:
-* http://www.opensource.org/licenses/mit-license.php
-*/
 
 /**
 * Fixture Class
