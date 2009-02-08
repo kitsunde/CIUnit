@@ -24,7 +24,7 @@ class fooLoader extends CI_Loader {
 	 * @param	mixed	any additional parameters
 	 * @return 	void
 	 */
-	function _ci_load_class($class, $params = NULL)
+	function _ci_load_class($class, $params = NULL, $object_name = NULL)
 	{
 		// Get the class name
 		$class = str_replace(EXT, '', $class);
@@ -86,7 +86,7 @@ class fooLoader extends CI_Loader {
                 }
 
 
-				return $this->_ci_init_class($class, config_item('subclass_prefix'), $params);
+				return $this->_ci_init_class($class, config_item('subclass_prefix'), $params, $object_name);
 			}
 
             // its not an extension request
@@ -94,7 +94,7 @@ class fooLoader extends CI_Loader {
 			$is_duplicate = FALSE;
 			foreach(array(BASEPATH.'libraries/', APPPATH.'libraries/', FSPATH) as $path)
 			{
-				$filepath = $path.$class.EXT;
+				$filepath = $path.$folders.$class.EXT;
 
 				// Does the file exist?  No?  Bummer...
 				if ( ! file_exists($filepath))
@@ -122,7 +122,7 @@ class fooLoader extends CI_Loader {
     				include($filepath);
     				$this->_ci_classes[] = $filepath;
                 }
-				return $this->_ci_init_class($class, '', $params);
+				return $this->_ci_init_class($class, '', $params, $object_name);
 			}
 		} // END FOREACH
 
@@ -143,7 +143,7 @@ class fooLoader extends CI_Loader {
 	 * @param	string
 	 * @return	null
 	 */
-	function _ci_init_class($class, $prefix = '', $config = FALSE)
+	function _ci_init_class($class, $prefix = '', $config = FALSE, $object_name = NULL)
 	{
 		// Is there an associated config file for this class?
 		if ($config === NULL)
@@ -166,7 +166,14 @@ class fooLoader extends CI_Loader {
 
 		// Set the variable name we will assign the class to
 		$class = strtolower($class);
-		$classvar = ( ! isset($this->_ci_varmap[$class])) ? $class : $this->_ci_varmap[$class];
+		if (is_null($object_name))
+		{
+			$classvar = ( ! isset($this->_ci_varmap[$class])) ? $class : $this->_ci_varmap[$class];
+		}
+		else
+		{
+			$classvar = $object_name;
+		}
 		// Instantiate the class
 		$CI =& get_instance();
 		if ($config !== NULL)
