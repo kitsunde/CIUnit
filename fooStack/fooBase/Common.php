@@ -166,13 +166,15 @@ function &load_class($class, $instantiate = TRUE)
 	if ($is_subclass == TRUE)
 	{
 		$name = $prefix.$class;
-        echo "Subclass ". $name . " loading..";
-		$objects[$class] =& new $name();
+        //echo "Subclass ". $name . " loading..";
+		$objects[$class] = & new $name();
 		return $objects[$class];
 	}
 
-    $prefix = $is_fooclass? $fooprefix:'CI_';
-	$name = ($class != 'Controller') ? $prefix.$class : $class;
+    $prefix = $is_fooclass ? $fooprefix : 'CI_';
+
+    //is there a class of this name? if not, add prefix
+	$name = (class_exists($class)) ? $class : $prefix.$class;
 
     //echo "Class ". $name. " loading..";
 
