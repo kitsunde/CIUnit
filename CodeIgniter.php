@@ -56,8 +56,11 @@ require(BASEPATH.'codeigniter/Compat'.EXT);
  *  Load the framework constants
  * ------------------------------------------------------
  */
-require(APPPATH.'config/constants'.EXT);
-
+if (file_exists(APPPATH.'config/constants'.EXT))
+{
+  
+  include_once(APPPATH.'config/constants'.EXT);
+}
 /*
  * ------------------------------------------------------
  *  Define a custom error handler so we can log PHP errors
