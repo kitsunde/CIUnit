@@ -3,9 +3,11 @@
 
 class fooLoader extends CI_Loader {
 
-      function __construct(){
+    var $_ci_loaded_files = array();
+
+    function __construct(){
         parent::__construct();
-      }
+    }
 
     /**
 	 * Load class
@@ -27,8 +29,8 @@ class fooLoader extends CI_Loader {
         //is it in a subfolder?
         $folders = explode('/', $class);
         if(count($folders) > 1){
-              $class = array_pop($folders);
-              $folders = join('/', $folders).'/';
+            $class = array_pop($folders);
+            $folders = join('/', $folders).'/';
         }else{
             $folders = '';
         }
@@ -37,21 +39,19 @@ class fooLoader extends CI_Loader {
         // We'll test for both lowercase and capitalized versions of the file name
 		foreach (array(ucfirst($class), strtolower($class)) as $class)
 		{
-
 			$subclass = APPPATH.'libraries/'.$folders.$prefix.$class.EXT;
 
 			// Is this a class extension request?
 			if (file_exists($subclass))
 			{
 				$baseclass = BASEPATH.'libraries/'.ucfirst($class).EXT;
-                  if(file_exists(FSPATH.config_item('fooStack_prefix').$class.EXT)){
+                if (file_exists(FSPATH.config_item('fooStack_prefix').$class.EXT))
+                {
                     require(APPPATH.'libraries/fooStack/foo'.$class.EXT);
                     $is_fooclass = TRUE;
                 }
 
-
-
-				if ( ! file_exists($baseclass))
+				if ( !file_exists($baseclass) )
 				{
 					log_message('error', "Unable to load the requested class: ".$class);
 					show_error("Unable to load the requested class: ".$class);
@@ -61,23 +61,26 @@ class fooLoader extends CI_Loader {
                 $include_files = true;
 
                 // Safety:  Was the class already loaded by a previous call?
-				if (in_array($subclass, $this->_ci_classes))
+				if (in_array($subclass, $this->_ci_loaded_files))
 				{
                     //unittest, we have to reassign it
-                    if(!defined('CIUnit_Version')){
+                    if ( !defined('CIUnit_Version') )
+                    {
                         $is_duplicate = TRUE;
                         log_message('debug', $class." class already loaded. Second attempt ignored.");
                         return;
-                    }else{
+                    }
+                    else
+                    {
                         $include_files = false;
                     }
 				}
-                if($include_files){
+                if ($include_files)
+                {
     				include($baseclass);
     				include($subclass);
-    				$this->_ci_classes[] = $subclass;
+    				$this->_ci_loaded_files[] = $subclass;
                 }
-
 
 				return $this->_ci_init_class($class, config_item('subclass_prefix'), $params, $object_name);
 			}
@@ -85,7 +88,7 @@ class fooLoader extends CI_Loader {
             // its not an extension request
 			// Lets search for the requested library file and load it.
 			$is_duplicate = FALSE;
-			foreach(array(BASEPATH.'libraries/', APPPATH.'libraries/', FSPATH) as $path)
+			foreach (array(BASEPATH.'libraries/', APPPATH.'libraries/', FSPATH) as $path)
 			{
 				$filepath = $path.$folders.$class.EXT;
 
@@ -99,21 +102,25 @@ class fooLoader extends CI_Loader {
                 // not if another controller before us loaded them
                 $include_files = true;
 				// Safety:  Was the class already loaded by a previous call?
-				if (in_array($filepath, $this->_ci_classes))
+				if (in_array($filepath, $this->_ci_loaded_files))
 				{
                     //same thing for main classes
                     //redesignme unittest, we have to reassign it
-                    if(!defined('CIUnit_Version')){
+                    if(!defined('CIUnit_Version'))
+                    {
                         $is_duplicate = TRUE;
                         log_message('debug', $class." class already loaded. Second attempt ignored.");
                         return;
-                    }else{
+                    }
+                    else
+                    {
                         $include_files = false;
                     }
 				}
-                if($include_files){
+                if ($include_files)
+                {
     				include($filepath);
-    				$this->_ci_classes[] = $filepath;
+    				$this->_ci_loaded_files[] = $filepath;
                 }
 				return $this->_ci_init_class($class, '', $params, $object_name);
 			}
@@ -171,23 +178,33 @@ class fooLoader extends CI_Loader {
 		$CI =& get_instance();
 		if ($config !== NULL)
 		{
-            if(!defined('CIUnit_Version')){
+            if (!defined('CIUnit_Version'))
+            {
 			    $CI->$classvar = new $name($config);
-            }elseif(!isset($CI->$classvar)){
+            }
+            elseif (!isset($CI->$classvar))
+            {
                 //redesignme: check if we have got one already..
                 $CI->$classvar = new $name($config);
             }
 		}
 		else
 		{
-            if(!defined('CIUnit_Version')){
+            if (!defined('CIUnit_Version'))
+            {
 			    $CI->$classvar = new $name;
-            }elseif(!isset($CI->$classvar)){
+            }
+            elseif (!isset($CI->$classvar))
+            {
                 //redesignme: check if we have got one already..
                 $CI->$classvar = new $name($config);
             }
 		}
+		
+		$this->_ci_classes[$class] = $classvar;
 	}
+	
+	
 
      /**
 	 * Database Loader
