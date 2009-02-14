@@ -81,7 +81,7 @@ class CIUnit {
         //the current controller must be archieved before littered
         $loader = &load_class('Loader');
         self::$controllers[self::$current] = array(
-            'adress' => self::$controller,
+            'adress' => &self::$controller,
             'models' => $loader->_ci_models,  //this might be an update if it was there before
             // FIXME, all additional properties of the loader / controllers
             // that have to be reset must go in some test config file..
@@ -103,19 +103,19 @@ class CIUnit {
         //the requested controller was loaded before?
         if ( isset(self::$controllers[$controller_name]) )
         {
-            //echo "saved found!";
+            //echo "saved found! $controller_name";
             //load it
-            $old = self::$controllers[$controller_name];
-            self::$controller = $old['adress'];
+            $old = &self::$controllers[$controller_name];
+            self::$controller = &$old['adress'];
             self::$current = $controller_name;
             $loader->_ci_models = $old['models'];
             //$loader->_ci_components = $old['components'];
-            //$loader->_ci_classes = $old['classes'];
-            CI_Base::$instance = self::$controller; //so get_instance() provides the correct controller
+            //$loader->_ci_classes = &$old['classes'];
+            CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         }
         else
         {
-            //echo "load new";
+            //echo "load new $controller_name";
             //it was not loaded before
             if (!class_exists($controller_name))
             {
