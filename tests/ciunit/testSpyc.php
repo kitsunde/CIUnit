@@ -13,7 +13,7 @@ include_once dirname(__FILE__).'/../CIUnit.php';
 class testSpyc extends PHPUnit_Framework_TestCase{
 
     function setUp(){
-        $this->CI = set_controller();
+        $this->CI = &set_controller();
     }
     
     //test instantiation of controller

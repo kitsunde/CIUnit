@@ -12,7 +12,7 @@ include_once dirname(__FILE__).'/../CIUnit.php';
 
 class testCIUnit extends CIUnit_TestCase{
     function setUp(){
-        $this->CI = set_controller();
+        $this->CI = &set_controller();
     }
 
     //test instantiation of controller
@@ -42,6 +42,11 @@ class testCIUnit extends CIUnit_TestCase{
       //$this->CI = set_controller('../tests/fixtures/Controller_fixt');
       $this->CI->load->library('Email');
       $this->assertTrue(method_exists($this->CI->email, 'send'));
+    }
+
+    public function testOutput(){
+        global $OUT;
+        $this->assertSame($OUT, $this->CI->output);
     }
 
     //testing outputting views

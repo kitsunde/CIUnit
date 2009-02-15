@@ -28,7 +28,7 @@ class AllTests extends CIUnitTestSuite
 
     public static function suite()
     {
-        $suite = new PHPUnit_Framework_TestSuite('REDESIGNME testsuite');
+        $suite = new PHPUnit_Framework_TestSuite('APPLICATION testsuite');
 
         $suite->addTestSuite('CiunitAllTests');  //make sure tests function correctly
         $suite->addTestSuite('SystemAllTests');  //env variables, php version, etc.
