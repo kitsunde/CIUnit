@@ -15,7 +15,7 @@
 */
 
 include(dirname(__FILE__) . '/CIUnit.php');
-                                               
+
 set_controller();
 
 /*
@@ -99,13 +99,13 @@ e.g.: 'php generate help migration'
 
     function fixtures()
     {
-        echo "generating...\n";
-
         $db = isset($this->params['db'])? $this->params['db']:'db';
         $prefix = ($db == 'db2')? "db2_":"";
 
-        $this->CI = set_controller('About');
+        $this->CI = set_controller('Welcome');
 
+        echo "generating...\n";
+        
         $tables = $this->CI->$db->list_tables();
         foreach ($tables as $table)
         {
