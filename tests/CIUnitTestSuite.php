@@ -1,14 +1,13 @@
 <?php
 
 /*
-* fooStack, CIUnit
-* Copyright (c) 2008 Clemens Gruenberger
-* Released with permission from www.redesignme.com, thanks guys!
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
 * Released under the MIT license, see:
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-class CIUnitTestSuite{
+class CIUnitTestSuite {
 
     public static function main()
     {

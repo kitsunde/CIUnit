@@ -2,7 +2,7 @@
 
 $libraryDir = APPPATH . 'libraries/fooStack/Spyc';
 
-if(!is_dir($libraryDir))
+if (!is_dir($libraryDir))
     exit("Spyc must be located in \"$libraryDir\"");
 
 require_once($libraryDir . '/spyc.php');

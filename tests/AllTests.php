@@ -1,14 +1,14 @@
 <?php
 
 /*
-* fooStack, CIUnit
-* Copyright (c) 2008 Clemens Gruenberger
-* Released with permission from www.redesignme.com, thanks guys!
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
 * Released under the MIT license, see:
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
+if (!defined('PHPUnit_MAIN_METHOD'))
+{
     define('PHPUnit_MAIN_METHOD', 'AllTests::main');
 }
 
@@ -23,20 +23,23 @@ require_once 'helpers/HelpersAllTests.php';
 require_once 'system/SystemAllTests.php';
 require_once 'ciunit/CiunitAllTests.php';
 
-class AllTests extends CIUnitTestSuite
-{
+class AllTests extends CIUnitTestSuite {
 
     public static function suite()
     {
         $suite = new PHPUnit_Framework_TestSuite('APPLICATION testsuite');
 
-        $suite->addTestSuite('CiunitAllTests');  //make sure tests function correctly
-        $suite->addTestSuite('SystemAllTests');  //env variables, php version, etc.
+        //CUnit tests itself
+        $suite->addTestSuite('CiunitAllTests');
+
+        //test here your system setup, e.g. for
+        //env variables, php version, etc.
+        $suite->addTestSuite('SystemAllTests');
 
         //test CI framework libs and extensions
         $suite->addTestSuite('LibsAlltests');
 
-        //test application
+        //test your application
         $suite->addTestSuite('ModelsAlltests');
         $suite->addTestSuite('ViewsAlltests');
         $suite->addTestSuite('ControllersAlltests');
@@ -44,8 +47,10 @@ class AllTests extends CIUnitTestSuite
 
         return $suite;
     }
+
 }
 
-if (PHPUnit_MAIN_METHOD == 'AllTests::main') {
+if (PHPUnit_MAIN_METHOD == 'AllTests::main')
+{
     AllTests::main();
 }

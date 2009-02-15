@@ -1,8 +1,14 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /*
-* fooStack
-* modified CI file
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
+* Released under the MIT license, see:
+* http://www.opensource.org/licenses/mit-license.php
+*/
+
+/*
+* CodeIgniter source modified for fooStack / CIUnit
 */
 
 /**

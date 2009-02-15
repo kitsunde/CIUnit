@@ -1,9 +1,8 @@
 <?php
 
 /*
-* fooStack, CIUnit
-* Copyright (c) 2008 Clemens Gruenberger
-* Released with permission from www.redesignme.com, thanks guys!
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
 * Released under the MIT license, see:
 * http://www.opensource.org/licenses/mit-license.php
 */
@@ -65,7 +64,7 @@ class CIUnit {
         return self::$instance;
     }
 
-    public static function &set_controller($controller='Controller')
+    public static function &set_controller($controller = 'Controller')
     {
         $controller_name = array_pop(split('/', $controller));
         //echo "\nc name ".$controller_name;
@@ -181,7 +180,7 @@ function &get_CIU()
 /**
 * sets CI controller
 */
-function &set_controller($controller='Controller')
+function &set_controller($controller = 'Controller')
 {
 	return CIUnit::set_controller($controller);
 }

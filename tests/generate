@@ -1,8 +1,8 @@
 <?php
 
 /*
-* fooStack, CIUnit
-* Copyright (c) 2008 Clemens Gruenberger
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
 * Released under the MIT license, see:
 * http://www.opensource.org/licenses/mit-license.php
 */
@@ -14,45 +14,57 @@
 *
 */
 
-include dirname(__FILE__).'/CIUnit.php';
+include(dirname(__FILE__) . '/CIUnit.php');
+                                               
 set_controller();
-
 
 /*
 * this function for extraction of command line arguments 
 * might go back into some foo helper class
 */
-function args_arr($arg_arr = false){
+function args_arr($arg_arr = false)
+{
   //extract commandline arguments
-  if($arg_arr === false){
+  if($arg_arr === false)
+  {
     $argv = $_SERVER['argv'];
-  }else{
+  }
+  else
+  {
     $argv = $arg_arr;
   }
   array_shift($argv);
 
-  $flags=array();
-  $params=array();
-  $args=array();
-  foreach($argv as $arg){
-    $param_parts=preg_split('/=/', $arg);
-    if(count($param_parts)==2){
-      $params[$param_parts[0]]=$param_parts[1];
-    }else{
-      if(substr($arg,0,1)=="-"){
-        $flags[]=substr($arg, 1);
-      }else{
-        $args[]=$arg;
+  $flags = array();
+  $params = array();
+  $args = array();
+  foreach ($argv as $arg)
+  {
+    $param_parts = preg_split('/=/', $arg);
+    if (count($param_parts) == 2)
+    {
+      $params[$param_parts[0]] = $param_parts[1];
+    }
+    else
+    {
+      if (substr($arg,0,1) == "-")
+      {
+        $flags[] = substr($arg, 1);
+      }
+      else
+      {
+        $args[] = $arg;
       }
     }
   }
-  return array('params' => $params, 'flags' => $flags, 'args'=>$args);
+  return array('params' => $params, 'flags' => $flags, 'args' => $args);
 }
 
 
-class Generate{
+class Generate {
 
-    function __construct(){
+    function __construct()
+    {
         $this->CI = &get_instance();
         $this->CI->load->library('Spyc');
         $this->CI->load->library('Fixture');
@@ -61,10 +73,13 @@ class Generate{
         $this->args = $this->args_arr['args'];
         $this->flags = $this->args_arr['flags'];
 
-        if(isset($this->args[0])){
+        if (isset($this->args[0]))
+        {
             $function = $this->args[0];
             $this->$function();
-        }else{
+        }
+        else
+        {
             echo "
 Please specify what task to run:
 e.g.: 'php generate fixtures' or
@@ -82,7 +97,8 @@ e.g.: 'php generate help migration'
         }
     }
 
-    function fixtures() {
+    function fixtures()
+    {
         echo "generating...\n";
 
         $db = isset($this->params['db'])? $this->params['db']:'db';
@@ -96,16 +112,21 @@ e.g.: 'php generate help migration'
               echo $table;
               $fields = $this->CI->$db->list_fields($table);
               $fixt_name= 'fixtures/'.$prefix.$table.'_fixt.yml';
-              if(file_exists($fixt_name)){
+              if (file_exists($fixt_name))
+              {
                     echo "fixture $fixt_name already exits!\n";
-              }else{
+              }
+              else
+              {
                     $h = fopen($fixt_name, 'w') or die("can't open file");
                     //write fixture!
-                    foreach(array('first', 'second', 'third') as $rowname){
+                    foreach (array('first', 'second', 'third') as $rowname)
+                    {
                         fwrite($h, $rowname.":\n");
-                        foreach ($fields as $field){
+                        foreach ($fields as $field)
+                        {
                               //echo $field;
-                              fwrite($h, "    ".$field.": \n");
+                              fwrite($h, '    ' . $field . ": \n");
                         }
                         fwrite($h, "\n");
                     }

@@ -1,11 +1,22 @@
 <?php
 
+/*
+* fooStack, CIUnit for CodeIgniter
+* Copyright (c) 2008-2009 Clemens Gruenberger
+* Released under the MIT license, see:
+* http://www.opensource.org/licenses/mit-license.php
+*/
+
+/*
+* CodeIgniter source modified for fooStack / CIUnit
+*/
 
 class fooLoader extends CI_Loader {
 
     var $_ci_loaded_files = array();
 
-    function __construct(){
+    function __construct()
+    {
         parent::__construct();
     }
 
@@ -28,10 +39,13 @@ class fooLoader extends CI_Loader {
 
         //is it in a subfolder?
         $folders = explode('/', $class);
-        if(count($folders) > 1){
+        if (count($folders) > 1)
+        {
             $class = array_pop($folders);
             $folders = join('/', $folders).'/';
-        }else{
+        }
+        else
+        {
             $folders = '';
         }
         //print_r($folders);
