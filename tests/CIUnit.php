@@ -79,14 +79,17 @@ class CIUnit {
 
         //the current controller must be archieved before littered
         $loader = &load_class('Loader');
-        self::$controllers[self::$current] = array(
-            'adress' => &self::$controller,
-            'models' => $loader->_ci_models,  //this might be an update if it was there before
+        
+        
+        if (isset(self::$controllers[self::$current]))
+        {
+            self::$controllers[self::$current]['models'] = $loader->_ci_models;  //this might be an update if it was there before
             // FIXME, all additional properties of the loader / controllers
             // that have to be reset must go in some test config file..
             //'components' => $loader->_ci_components,
             //'classes' => $loader->_ci_classes
-            );
+        }
+            
         //clean up the current controllers mess
         //reset models
         $loader->_ci_models = array();
@@ -99,13 +102,14 @@ class CIUnit {
         {
             output(); viewvars();
         }
+        
         //the requested controller was loaded before?
         if ( isset(self::$controllers[$controller_name]) )
         {
             //echo "saved found! $controller_name";
             //load it
             $old = &self::$controllers[$controller_name];
-            self::$controller = &$old['adress'];
+            self::$controller = &$old['address'];
             self::$current = $controller_name;
             $loader->_ci_models = $old['models'];
             //$loader->_ci_components = $old['components'];
@@ -120,8 +124,14 @@ class CIUnit {
             {
                 include_once(APPPATH . 'controllers/' . $controller . EXT);
             }
-            self::$controller = new $controller_name();
+                                             
             self::$current = $controller_name;
+            
+            self::$controllers[$controller_name] = Array(
+                                                   'address' => new $controller_name(),
+                                                   'models' => array()
+                                                   );
+            self::$controller = &self::$controllers[$controller_name]['address'];                                                   
         }
         return self::$controller;
     }

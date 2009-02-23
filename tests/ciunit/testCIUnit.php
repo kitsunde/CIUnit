@@ -130,5 +130,18 @@ class testCIUnit extends CIUnit_TestCase{
         $this->assertEquals(array('first'=>'clemens',  'third'=>'bibi'), $this->filter_arr($arr, array('/./', '/ir/')));
         $this->assertEquals(array('first'=>'clemens',  'third'=>'bibi'), $this->filter_arr($arr, array('/./i', '/ir/i')));
     }
+    
+    function testDifferentControllers()
+    {
+        //a welcome controller is needed for this test!
+        $default_controller = &set_controller('Controller');
+        $welcome            = &set_controller('Welcome');
+        
+        $default_controller = &set_controller('Controller');
+        
+        $this->assertEquals('controller', strtolower(substr(get_class($default_controller), 0, 10)));
+        $this->assertEquals('welcome',    strtolower(get_class($welcome)));
+        
+    }
 
 }
