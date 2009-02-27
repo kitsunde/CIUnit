@@ -7,7 +7,7 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-error_reporting(E_STRICT);
+error_reporting(E_ALL | E_STRICT);
 
 //load Testing
 require_once 'PHPUnit/Framework.php';
@@ -228,7 +228,7 @@ function viewvars()
 }
 
 //=== and off we go ===
-$CI = set_controller();
+$CI = &set_controller();
 $CI->load->library('Spyc');
 $CI->load->library('Fixture');
 CIUnit::$spyc = &$CI->spyc;
