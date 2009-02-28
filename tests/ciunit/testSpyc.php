@@ -24,12 +24,12 @@ class testSpyc extends PHPUnit_Framework_TestCase{
     
     public function testLoadYaml(){
       $this->CI->load->library('Spyc');
-      $yaml = Spyc::YAMLLoad(FSPATH.'spyc/spyc.yaml');
-      $yaml2 = $this->CI->spyc->YAMLLoad(FSPATH.'spyc/spyc.yaml');
+      $yaml = Spyc::YAMLLoad(FSPATH . 'Spyc/spyc.yaml');
+      $yaml2 = $this->CI->spyc->YAMLLoad(FSPATH . 'Spyc/spyc.yaml');
       $this->assertEquals($yaml, $yaml2);
       //loads allright;
       $this->assertType('array', $yaml);
-      $testfile = file_get_contents(FSPATH.'spyc/test.php');
+      $testfile = file_get_contents(FSPATH . 'Spyc/test.php');
       $this->assertSame(1, preg_match('/YAMLLoad\(\'spyc\.yaml\'\);([\s\S]*)\?>/', $testfile, $matches));
       ob_start();
       eval($matches[1]);
