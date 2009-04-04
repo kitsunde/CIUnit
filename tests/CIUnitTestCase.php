@@ -30,6 +30,7 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
   */
   function dbfixt()
   { //can have multiple strings as arguments!
+    $this->CI->db = $this->CI->config->item('db');
     $fixts = func_get_args();
     $this->load_fixt($fixts);
     //log_message('debug', 'fixtures loaded as instance variables');
@@ -218,6 +219,7 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
   */
   function dbfixt(){ //can have multiple strings as arguments!
     $fixts = func_get_args();
+    $this->CI->db = $this->CI->config->item('db');    
     $this->load_fixt($fixts);
     //log_message('debug', 'fixtures loaded as instance variables');
     foreach($fixts as $fixt){

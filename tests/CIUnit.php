@@ -114,7 +114,6 @@ class CIUnit {
             $loader->_ci_models = $old['models'];
             //$loader->_ci_components = $old['components'];
             //$loader->_ci_classes = &$old['classes'];
-            CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         }
         else
         {
@@ -133,6 +132,7 @@ class CIUnit {
                                                    );
             self::$controller = &self::$controllers[$controller_name]['address'];                                                   
         }
+        CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         return self::$controller;
     }
 

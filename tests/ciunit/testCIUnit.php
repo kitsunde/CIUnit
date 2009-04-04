@@ -93,14 +93,20 @@ class testCIUnit extends CIUnit_TestCase{
 
     //test instantiation of custom application controllers
     public function testApplicationController(){
-      //lets set a different controller
-      $this->CI = set_controller('../tests/fixtures/Controller_fixt');
+      //lets set a different controller      
+      $current = CIUnit::$current;
+      $this->CI = &set_controller('../tests/fixtures/Controller_fixt');
+              
       $this->assertTrue(method_exists($this->CI, 'test'));
       $this->assertEquals($this->CI->test('input'), 'input');
+                     
+      //and switch back
+      set_controller($current);      
     }
 
     public function testView2(){
-      $this->CI = set_controller('../tests/fixtures/Controller_fixt');
+      $current = CIUnit::$current;
+      $this->CI = &set_controller('../tests/fixtures/Controller_fixt');
       $some_var = array(1,2,3);
       $data = array(
         'data' => $some_var
@@ -116,6 +122,9 @@ class testCIUnit extends CIUnit_TestCase{
       
       $this->CI->show3(); //includes view that includes other file + loads another view
       $this->assertEquals($expected.$expected, output());
+      
+      //and switch back
+      set_controller($current);      
     }
 
     function testFilterArr(){
