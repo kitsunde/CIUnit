@@ -399,10 +399,10 @@ class Spyc {
     } elseif (preg_match ('/^[0-9]+$/', $value)) {
       $value = (int)$value;
     } elseif (in_array(strtolower($value),
-    array('true', 'on', '+', 'yes', 'y'))) {
+    array('true'))) {
       $value = true;
     } elseif (in_array(strtolower($value),
-    array('false', 'off', '-', 'no', 'n'))) {
+    array('false'))) {
       $value = false;
     } elseif (is_numeric($value)) {
       $value = (float)$value;

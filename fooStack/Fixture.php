@@ -28,6 +28,10 @@ class Fixture {
     function load($table, $fixt)
     {
         $this->CI = &get_instance();
+        if (!isset($this->CI->db) || !isset($this->CI->db->database))
+        {
+         $this->CI->db = $this->CI->config->item('db');   
+        }
         //FIXME, this has to be done only once
         $db_name_len = strlen($this->CI->db->database);
         if (substr($this->CI->db->database, $db_name_len-5, $db_name_len) != '_test')
