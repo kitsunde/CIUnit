@@ -14,7 +14,7 @@ require_once 'PHPUnit/Framework.php';
 require_once 'CIUnitTestCase.php';
 require_once 'CIUnitTestSuite.php';
 
-define('CIUnit_Version', '0.14');
+define('CIUnit_Version', '0.15');
 
 //start CodeIgniter
 $rel_dir = dirname(__FILE__) . '/../../../';
