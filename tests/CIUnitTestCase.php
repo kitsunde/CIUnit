@@ -13,10 +13,11 @@
 */
 class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
 
-  function __construct()
+  function __construct($name = NULL, array $data = array(), $dataName = '')
   {
-    $args = func_get_args();
-    call_user_func_array(array($this, 'parent::__construct'), $args); 
+    //$args = func_get_args();
+    //call_user_func_array(array($this, 'parent::__construct'), $args);
+    parent::__construct($name, $data, $dataName);
     $this->CI = &get_instance();
     //log_message('debug', get_class($this).' CIUnit_TestCase initialized');
   }
