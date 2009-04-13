@@ -233,7 +233,7 @@ class fooLoader extends CI_Loader {
 	{
         //redesignme, unittest check if there is a DB class already instantiated
         //reuse it if yes
-        if (isset($this->_ci_db)){
+        if (isset($this->_ci_db) and !$return){
             // Grab the super object
 		    $CI =& get_instance();
             $CI->db = $this->_ci_db;

@@ -153,4 +153,14 @@ class testCIUnit extends CIUnit_TestCase{
         
     }
 
+    function testMultiDBs()
+    {
+        include(APPPATH.'config/database'.EXT);
+		if ( isset($db) AND count($db) != 0)
+        {
+            $this->db2 = $this->CI->load->database(array_shift(array_keys($db)), TRUE);
+            $this->assertTrue(isset($this->db2));
+        }
+    }
+
 }
