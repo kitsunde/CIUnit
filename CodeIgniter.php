@@ -18,7 +18,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2006, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -64,7 +64,6 @@ require(BASEPATH.'codeigniter/Compat'.EXT);
  */
 if (file_exists(APPPATH.'config/constants'.EXT))
 {
-  
   include_once(APPPATH.'config/constants'.EXT);
 }
 /*
@@ -188,10 +187,10 @@ $BM->mark('loading_time_base_classes_end');
 $class  = $RTR->fetch_class();
 $method = $RTR->fetch_method();
 
-
 if ( ! class_exists($class)
 	OR $method == 'controller'
 	OR strncmp($method, '_', 1) == 0
+    //OR in_array(strtolower($method), array_map('strtolower', get_class_methods('Controller')))
 	OR in_array($method, get_class_methods('Controller'), TRUE)
 	)
 {

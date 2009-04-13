@@ -8,7 +8,7 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-include_once dirname(__FILE__).'/../CIUnit.php';
+include_once dirname(__FILE__).'/../CIUnit.php';    
 
 class testPHPUnitFeatures extends CIUnit_TestCase {
 
