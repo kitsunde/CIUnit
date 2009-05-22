@@ -162,10 +162,11 @@ class fooLoader extends CI_Loader {
 		// Is there an associated config file for this class?
 		if ($config === NULL)
 		{
-			$config = NULL;
-			if (file_exists(APPPATH.'config/'.$class.EXT))
-			{
-				include(APPPATH.'config/'.$class.EXT);
+			foreach(array(ucfirst($class), strtolower($class)) as $clsName) {
+    			if (file_exists(APPPATH.'config/'.$clsName.EXT))
+    			{
+    				include(APPPATH.'config/'.$clsName.EXT);
+    			}
 			}
 		}
 
