@@ -33,13 +33,16 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
   { //can have multiple strings as arguments!
     $this->CI->db = $this->CI->config->item('db');
     $fixts = func_get_args();
+
     $this->load_fixt($fixts);
-    //log_message('debug', 'fixtures loaded as instance variables');
-    foreach($fixts as $fixt){
+
+    log_message('debug', 'fixtures loaded as instance variables');
+    foreach($fixts as $fixt)
+    {
       $fixt_name = $fixt . '_fixt';
       CIUnit::$fixture->load($fixt, $this->$fixt_name);
     }
-    //log_message('debug', 'all fixtures loaded');
+    log_message('debug', 'all fixtures loaded');
   }
 
   /**

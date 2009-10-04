@@ -16,11 +16,14 @@ require_once 'CIUnitTestSuite.php';
 
 define('CIUnit_Version', '0.15');
 
-//start CodeIgniter
-$rel_dir = dirname(__FILE__) . '/../../../';
-include_once $rel_dir . 'index.php';
+//load CIUnit users settings 
+include_once 'settings.php';
 
-define('TESTSPATH', APPPATH . 'tests/');
+//load CodeIgniter
+include_once $path_to_codeigniter . '/index.php';
+
+//path to your 'tests' directory
+define('TESTSPATH', str_replace('\\', '/', realpath(dirname(__FILE__))).'/');
 
 /**
 * CIUnit Class
@@ -64,7 +67,7 @@ class CIUnit {
         return self::$instance;
     }
 
-    public static function &set_controller($controller = 'Controller')
+    public static function &set_controller($controller = 'Controller', $path=FALSE)
     {
         $controller_name = array_pop(split('/', $controller));
         //echo "\nc name ".$controller_name;
@@ -121,7 +124,14 @@ class CIUnit {
             //it was not loaded before
             if (!class_exists($controller_name))
             {
-                include_once(APPPATH . 'controllers/' . $controller . EXT);
+                if ($path)
+                {
+                     include_once($path . $controller . EXT);
+                }
+                else
+                {
+                    include_once(APPPATH . 'controllers/' . $controller . EXT);
+                }
             }
                                              
             self::$current = $controller_name;
@@ -190,9 +200,9 @@ function &get_CIU()
 /**
 * sets CI controller
 */
-function &set_controller($controller = 'Controller')
+function &set_controller($controller = 'Controller', $path=FALSE)
 {
-	return CIUnit::set_controller($controller);
+	return CIUnit::set_controller($controller, $path);
 }
 
 /**
