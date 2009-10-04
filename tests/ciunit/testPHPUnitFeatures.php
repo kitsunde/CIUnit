@@ -8,7 +8,7 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-include_once dirname(__FILE__).'/../CIUnit.php';    
+include_once dirname(__FILE__).'/../CIUnit.php';
 
 class testPHPUnitFeatures extends CIUnit_TestCase {
 
@@ -32,5 +32,20 @@ class testPHPUnitFeatures extends CIUnit_TestCase {
             array(1, 0, -144, -143),
         );
     }
+
+    /**
+    * @expectedException PHPUnit_Framework_Error
+    */
+    /*
+    public function testPhpError()
+    {
+        $this->assertEquals('PHPUnit_Framework_Error', $this->getExpectedException());
+        echo $this->expectedExceptionCode;
+        try {
+        include 'wrong_file.php';
+        }catch(Error $e) {
+        print_r($e);
+        }
+    }*/
 
 }

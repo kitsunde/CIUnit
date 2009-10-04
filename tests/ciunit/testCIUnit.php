@@ -10,13 +10,16 @@
 
 include_once dirname(__FILE__).'/../CIUnit.php';
 
-class testCIUnit extends CIUnit_TestCase{
-    function setUp(){
+class testCIUnit extends CIUnit_TestCase
+{
+    function setUp()
+    {
         $this->CI = &set_controller();
     }
 
     //test instantiation of controller
-    public function testController(){
+    public function testController()
+    {
       $this->assertTrue(method_exists($this->CI, '_ci_initialize'));
       $this->assertFalse(method_exists($this->CI, 'test'));
     }
@@ -33,13 +36,13 @@ class testCIUnit extends CIUnit_TestCase{
     }
     
     public function testControllerRegeneration03(){
-      $this->CI->_ci_scaffolding=True;
+      //$this->CI->_ci_scaffolding=True;
       //echo 'after';
     }
 
     //testing loader class
     public function testLoadLibrary(){
-      //$this->CI = set_controller('../tests/fixtures/Controller_fixt');
+      //$this->CI = set_controller(TESTSPATH . 'fixtures/Controller_fixt');
       $this->CI->load->library('Email');
       $this->assertTrue(method_exists($this->CI->email, 'send'));
     }
@@ -49,53 +52,53 @@ class testCIUnit extends CIUnit_TestCase{
         $this->assertSame($OUT, $this->CI->output);
     }
 
-    //testing outputting views
-    public function testView(){
-      $this->assertSame('', output());
-      
-      $some_var = array(1,2,3);
-      $viewdata = array(
-        'data' => $some_var
-      );
-      $this->CI->load->view('../tests/fixtures/view_fixt.php', $viewdata);
+    public function testView()
+    {
+        $this->assertSame('', output());
 
-      //view variables  /*strange assignment*/
-      //print_r($data);
-      //print_r(viewvars());
-      $this->assertEquals($viewdata, viewvars());
-      //no assignment of $data to controller
-      $this->assertFalse(isset($data));
+        $some_var = array(1,2,3);
+        $viewdata = array(
+            'data' => $some_var
+        );
+        $this->CI->load->view_fixt(TESTSPATH . 'fixtures/view_fixt.php', $viewdata);
 
-      //check output
-      $expected = print_r($some_var, True);
-      $this->assertEquals($expected, output());
+        $this->assertEquals($viewdata, viewvars());
+        //no assignment of $data to controller
+        $this->assertFalse(isset($data));
 
-      //output is cleared after being called
-      $this->assertSame('', output());
+        //view_fixt.php just does a print_r($data);
+        $expected = print_r($some_var, True);
+        $this->assertEquals($expected, output());
 
-      //multiple view calls
-      $this->CI->load->view('../tests/fixtures/view_fixt2.php', $viewdata);
-      //find rendered result concatenated in output()
-      $this->assertEquals($expected.$expected, output());
-      //the nested assignment of data in the second fixture extracts $some_var
-      $this->assertEquals(array('data'=>$some_var, '0'=>1, '1'=>2, '2'=>3), viewvars());
-      //->that means variables from higher levels are available..
+        //output is cleared after being called
+        $this->assertSame('', output());
+
+        //multiple view calls
+        $this->CI->load->view_fixt(TESTSPATH . 'fixtures/view_fixt2.php', $viewdata);
+        //find rendered result concatenated in output()
+        $this->assertEquals($expected.$expected, output());
+        //the nested assignment of data in the second fixture extracts $some_var
+        $this->assertEquals(array('data'=>$some_var, '0'=>1, '1'=>2, '2'=>3), viewvars());
+        //->that means variables from higher levels are available..
     }
 
-    public function testViewIndependent(){
+    public function testViewIndependent()
+    {
       $this->assertEquals('', output());
       $this->assertEquals(array(), viewvars());
     }
+
 
     //*****************************************
     // NICE, we can now switch to different controllers
     //see hackery in MY_Loader / MY_Controller
 
     //test instantiation of custom application controllers
-    public function testApplicationController(){
+    public function testApplicationController()
+    {
       //lets set a different controller      
       $current = CIUnit::$current;
-      $this->CI = &set_controller('../tests/fixtures/Controller_fixt');
+      $this->CI = &set_controller('Controller_fixt', TESTSPATH . 'fixtures/');
               
       $this->assertTrue(method_exists($this->CI, 'test'));
       $this->assertEquals($this->CI->test('input'), 'input');
@@ -104,9 +107,11 @@ class testCIUnit extends CIUnit_TestCase{
       set_controller($current);      
     }
 
-    public function testView2(){
+    public function testView2()
+    {
       $current = CIUnit::$current;
-      $this->CI = &set_controller('../tests/fixtures/Controller_fixt');
+      $this->CI = &set_controller('Controller_fixt', TESTSPATH . 'fixtures/');
+
       $some_var = array(1,2,3);
       $data = array(
         'data' => $some_var
@@ -114,7 +119,6 @@ class testCIUnit extends CIUnit_TestCase{
       $expected = print_r($some_var, True);
 
       $this->CI->show1($some_var); //includes view fixture
-      
       $this->assertEquals($expected, output()); 
 
       $this->CI->show2(); //calls another function + view fixture
@@ -122,22 +126,46 @@ class testCIUnit extends CIUnit_TestCase{
       
       $this->CI->show3(); //includes view that includes other file + loads another view
       $this->assertEquals($expected.$expected, output());
-      
+
       //and switch back
       set_controller($current);      
     }
 
     function testFilterArr(){
         $arr=array('first'=>'clemens', 'second'=>'manfred', 'third'=>'bibi');
-        $arr2=array('first'=>array('name'=>'clemens', 'id'=>34), 'second'=>array('name'=>'manfred', 'id'=>99), 'third'=>array('name'=>'bibi'));
-        $this->assertEquals(array('first'=>'clemens', 'second'=>'manfred'), $this->filter_arr($arr, array('/e/')));
-        $this->assertEquals(array('first'=>$arr2['first'], 'second'=>$arr2['second']), $this->filter_arr($arr2, array('name'=>'/e/')));
-        $this->assertEquals(array('first'=>$arr2['first']), $this->filter_arr($arr2, array('name'=>'clemens')));
-        $this->assertEquals(array('first'=>$arr2['first'], 'second'=>$arr2['second']), $this->filter_arr($arr2, array('id'=>'/\d+/')));
-
-        $this->assertEquals(array('first'=>'clemens'), $this->filter_arr($arr, array('/./', '/first/')));
-        $this->assertEquals(array('first'=>'clemens',  'third'=>'bibi'), $this->filter_arr($arr, array('/./', '/ir/')));
-        $this->assertEquals(array('first'=>'clemens',  'third'=>'bibi'), $this->filter_arr($arr, array('/./i', '/ir/i')));
+        $arr2=array(
+            'first'=>array('name'=>'clemens', 'id'=>34),
+            'second'=>array('name'=>'manfred', 'id'=>99),
+            'third'=>array('name'=>'bibi')
+        );
+        $this->assertEquals(
+            array('first'=>'clemens', 'second'=>'manfred'),
+            $this->filter_arr($arr, array('/e/'))
+        );
+        $this->assertEquals(
+            array('first'=>$arr2['first'], 'second'=>$arr2['second']),
+            $this->filter_arr($arr2, array('name'=>'/e/'))
+        );
+        $this->assertEquals(
+            array('first'=>$arr2['first']),
+            $this->filter_arr($arr2, array('name'=>'clemens'))
+        );
+        $this->assertEquals(
+            array('first'=>$arr2['first'], 'second'=>$arr2['second']),
+            $this->filter_arr($arr2, array('id'=>'/\d+/'))
+        );
+        $this->assertEquals(
+            array('first'=>'clemens'),
+            $this->filter_arr($arr, array('/./', '/first/'))
+        );
+        $this->assertEquals(
+            array('first'=>'clemens',  'third'=>'bibi'),
+            $this->filter_arr($arr, array('/./', '/ir/'))
+        );
+        $this->assertEquals(
+            array('first'=>'clemens',  'third'=>'bibi'),
+            $this->filter_arr($arr, array('/./i', '/ir/i'))
+        );
     }
     
     function testDifferentControllers()
@@ -145,7 +173,6 @@ class testCIUnit extends CIUnit_TestCase{
         //a welcome controller is needed for this test!
         $default_controller = &set_controller('Controller');
         $welcome            = &set_controller('Welcome');
-        
         $default_controller = &set_controller('Controller');
         
         $this->assertEquals('controller', strtolower(substr(get_class($default_controller), 0, 10)));
@@ -155,11 +182,11 @@ class testCIUnit extends CIUnit_TestCase{
 
     function testMultiDBs()
     {
-        include(APPPATH.'config/database'.EXT);
+        include(APPPATH . 'config/database' . EXT);
 		if ( isset($db) AND count($db) != 0)
         {
             $this->db2 = $this->CI->load->database(array_shift(array_keys($db)), TRUE);
-            $this->assertTrue(isset($this->db2));
+            $this->assertTrue(isset( $this->db2 ));
         }
     }
 

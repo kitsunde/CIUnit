@@ -357,6 +357,15 @@ class fooLoader extends CI_Loader {
 
 	}
 
+    function view_fixt($view, $vars = array(), $return = FALSE)
+    {
+		return $this->_ci_load(
+            array('_ci_path' => $view,
+                '_ci_vars' => $this->_ci_object_to_array($vars),
+                '_ci_return' => $return)
+        );
+    }
+
 	// --------------------------------------------------------------------
 
 

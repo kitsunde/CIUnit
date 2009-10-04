@@ -36,26 +36,25 @@ class Fixture {
         $db_name_len = strlen($this->CI->db->database);
         if (substr($this->CI->db->database, $db_name_len-5, $db_name_len) != '_test')
         {
-            die("\nSorry, the name of your test database must end on '_test'.\nThis prevents deleting important data by accident.\n");
+            die("\nSorry, the name of your test database must end on '_test'.\n".
+                "This prevents deleting important data by accident.\n");
         }
 
         # $fixt is supposed to be an associative array outputted by spyc from YAML file
-        $this->CI->db->simple_query('truncate table '.$table.';');
+        $this->CI->db->simple_query('truncate table ' . $table . ';');
         foreach ($fixt as $id=>$row)
         {
             foreach ($row as $key=>$val)
             {
-                if ($val != '')
+                if ($val !== '')
                 {
-                    //fix for bad field names requiring backticks:
-                    $row['`'.$key.'`']=$val;
+                    $row["`$key`"]=$val;
                 }
                 //unset the rest
                 unset($row[$key]);
             }
-            //print_r($row);
             $this->CI->db->insert($table, $row);
-            //log_message('debug', "fixture: '$id' for $table loaded");
+            log_message('debug', "fixture: '$id' for $table loaded");
         }
     }
 
