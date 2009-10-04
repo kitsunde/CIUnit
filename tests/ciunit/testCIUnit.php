@@ -60,7 +60,7 @@ class testCIUnit extends CIUnit_TestCase
         $viewdata = array(
             'data' => $some_var
         );
-        $this->CI->load->view_fixt(TESTSPATH . 'fixtures/view_fixt.php', $viewdata);
+        $this->CI->load->viewfile(TESTSPATH . 'fixtures/view_fixt.php', $viewdata);
 
         $this->assertEquals($viewdata, viewvars());
         //no assignment of $data to controller
@@ -74,7 +74,7 @@ class testCIUnit extends CIUnit_TestCase
         $this->assertSame('', output());
 
         //multiple view calls
-        $this->CI->load->view_fixt(TESTSPATH . 'fixtures/view_fixt2.php', $viewdata);
+        $this->CI->load->viewfile(TESTSPATH . 'fixtures/view_fixt2.php', $viewdata);
         //find rendered result concatenated in output()
         $this->assertEquals($expected.$expected, output());
         //the nested assignment of data in the second fixture extracts $some_var

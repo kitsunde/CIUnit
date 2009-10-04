@@ -356,11 +356,16 @@ class fooLoader extends CI_Loader {
 		}
 
 	}
-
-    function view_fixt($view, $vars = array(), $return = FALSE)
+    
+   /*
+    * Can load a view file from an absolute path and
+    * relative to the CodeIgniter index.php file
+    * Handy if you have views outside the usual CI views dir
+    */
+    function viewfile($viewfile, $vars = array(), $return = FALSE)
     {
 		return $this->_ci_load(
-            array('_ci_path' => $view,
+            array('_ci_path' => $viewfile,
                 '_ci_vars' => $this->_ci_object_to_array($vars),
                 '_ci_return' => $return)
         );

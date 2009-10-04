@@ -19,7 +19,7 @@ class Controller_fixt extends Controller {
   }
   
   function show1($data){
-    $this->load->view('../tests/fixtures/view_fixt', array('data' => $data));
+    $this->load->viewfile(TESTSPATH . 'fixtures/view_fixt.php', array('data' => $data));
   }
   
   function show2(){
@@ -27,7 +27,7 @@ class Controller_fixt extends Controller {
     $data=array(
       'data' => $some_var
     );
-    $this->load->view('../tests/fixtures/view_fixt', $data);
+    $this->load->viewfile(TESTSPATH . 'fixtures/view_fixt.php', $data);
   }
   
   function show3(){
@@ -35,7 +35,7 @@ class Controller_fixt extends Controller {
     $data=array(
       'data' => $some_var
     );
-    $this->load->view('../tests/fixtures/view_fixt2', $data);
+    $this->load->viewfile(TESTSPATH . 'fixtures/view_fixt2.php', $data);
   }
 
 }
