@@ -47,36 +47,41 @@ CIUnit is a cool bridge between your CodeIgniter application and phpUnit.
 
 
 <ul>
-  <li>CodeIgniter 1.6.0+ ( tested with 1.6.X, 1.7.0 and <b>1.7.1</b> )</li>
+  <li>CodeIgniter 1.6.0+ ( tested with 1.6.X, 1.7.0, 1.7.1 and <b>1.7.2</b> )</li>
   <li>PHP 5.1+</li>
 </ul>
 
-<p><a href="fooStack_v0.15.zip">Download the current <b>fooStack v0.15</b> here!</a></p>
+<p><a href="fooStack_v0.16.zip">Download the current <b>fooStack v0.16</b> - for CI 1.7.2 here!</a></p>
+<p><a href="fooStack_v0.15.zip">Download the slightly outdated <b>fooStack v0.15</b> here - for CI 1.6.X, 1.7.1</a></p>
+<b>For v0.15.zip please be aware that the installation is slightly different! Have a look at the index.html file included in fooStack_v0.15.zip</b>
+
 <p style='font-size: 0.9em; font-style: italic;'>(The cutting edge development version and older versions are accessible through 
 the public mercurial repository at <a href="http://www.bitbucket.org/rafsoaken/ciunit/overview/">bitbucket.org / ciunit</a>)</p>
 
 <p>
-Install it as follows:
+<h2>2 minute Setup:</h2>
 </p>
+
 <ol>
-  <li>Copy the fooStack directory in your YourProject/system/application/libraries directory</li>
-  <li>Note that at the moment CIUnit assumes you use the standard layout for your CodeIgniter project.</li>
-  <li>Copy the tests directory in your YourProject/system/application directory</li>
-  <li>Replace the CodeIgniter.php file in your YourProject/system/codeigniter directory with the one of the package</li>  
-  <li>replace the line that starts with <pre>$active_group =</pre> in your database.php (YourProject/system/application/config directory) with:<br />
+  <li>Download and unzip the fooStack package in a temporary folder</li>
+  <li>Copy the fooStack directory in your "YourProject/system/application/libraries" directory</li>
+  <li>Copy the tests directory in your "YourProject/system/application" directory</li>
+  <li>If you don't use the standard layout for your CodeIgniter project, change the first 2 paths in the file "YourProject/system/application/libraries/fooStack/fooBase/index.php"</li>
+  <li>Replace the line that starts with <pre>$active_group =</pre> in your database.php ("YourProject/system/application/config" directory) with:<br />
+
 <pre>
-$env_used = 'default'; //where default would be the name of your development setting
+$env_used = 'default'; //name of your development setting
 if(defined('CIUnit_Version')){
   $env_used .= '_test';
 }
 $active_group = $env_used;</pre></li>
   
   <li>Create a new database setting that will act as the test database (it will always be cleared when you run tests!), 
-  that is named like your development setting but with a trailing '_test'. <b>Note:</b> CIUnit fixtures will ask for the trailing '_test' to prevent accidental data loss.</li> 
+  that is named like your development setting but with a trailing '_test'. <b>Note:</b> CIUnit fixtures will insist on the trailing '_test' to prevent accidental data loss.</li> 
     
 </ol>
 
-<p><b> Congratulations you are done with installing fooStack!</b></p>
+<p><b>Congratulations you are done with setting up fooStack!</b></p>
 <p>Oh, wait, do you have phpUnit already installed?</p> 
 <p><a href="http://www.phpunit.de/manual/current/en/installation.html">http://www.phpunit.de/manual/current/en/installation.html</a></p>
 
@@ -84,7 +89,7 @@ $active_group = $env_used;</pre></li>
 
 <h3>Run tests:</h3>
 <ul>
-  <li>Run all tests from within the tests directory: "phpunit AllTests.php", or use "phpunit --verbose AllTests.php" to get more detailed output</li>
+  <li>Run all tests from within the tests directory: "phpunit AllTests.php", or use "phpunit --verbose AllTests.php" for more detailed output</li>
   <li>Run only a subgroup of tests, eg model tests, go into the tests/models directory and run "phpunit ModelAllTests.php"</li>
   <li>Consequently, for running just one particular test, change to this test's directory and type "phpunit testSomeStuff.php"</li>  
 </ul>
@@ -98,7 +103,7 @@ The fixture files are then available in the tests/fixtures directory.
 </p>
 <p>
 Using the fixtures is easy:
-Fill the yaml fixture files with the fixture data needed (<a href="http://en.wikipedia.org/wiki/YAML">yaml is a easily readable format to format your data in</a>). 
+Fill the yaml fixture files with the fixture data needed (<a href="http://en.wikipedia.org/wiki/YAML">yaml is a easily readable format for your data</a>). 
 Once this is done, call e.g. <pre>$this->dbfixt('items', 'comments', 'users'); </pre> from within the test setup function. Then these table fixtures are assured to be loaded into your test database AND are available as test variables like so:
 <pre>$this->items_fixt, $this->comments_fixt, $this->users_fixt.</pre> E.g the second row of data in the comments table in your tests database 
 is also available through <pre>$this->comments_fixt['second'];</pre>
@@ -106,7 +111,7 @@ is also available through <pre>$this->comments_fixt['second'];</pre>
 
 <h3>CIUnit tests itself</h3>
 <p>
-Without writing any tests, typing "phpunit CIUnitAllTests.php" from within the application/tests/ciunit directory will already run a couple of tests - these make sure that CIUnit is correctly installed and works as expected.
+Without writing any tests, typing "phpunit CIUnitAllTests.php" from within the "YourProject/application/tests/ciunit" directory will already run a couple of tests - these make sure that CIUnit is correctly installed and works as expected.
 </p>
 
 </div>
