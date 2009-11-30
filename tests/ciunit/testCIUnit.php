@@ -170,24 +170,12 @@ class testCIUnit extends CIUnit_TestCase
     
     function testDifferentControllers()
     {
-        //a welcome controller is needed for this test!
-        $default_controller = &set_controller('Controller');
-        $welcome            = &set_controller('Welcome');
-        $default_controller = &set_controller('Controller');
+        $default_controller = &set_controller('Controller_fixt', TESTSPATH . 'fixtures/');
+        $second_controller  = &set_controller('Controller_fixt2', TESTSPATH . 'fixtures/');
+        $default_controller = &set_controller('Controller_fixt', TESTSPATH . 'fixtures/');
         
-        $this->assertEquals('controller', strtolower(substr(get_class($default_controller), 0, 10)));
-        $this->assertEquals('welcome',    strtolower(get_class($welcome)));
-        
-    }
-
-    function testMultiDBs()
-    {
-        include(APPPATH . 'config/database' . EXT);
-		if ( isset($db) AND count($db) != 0)
-        {
-            $this->db2 = $this->CI->load->database(array_shift(array_keys($db)), TRUE);
-            $this->assertTrue(isset( $this->db2 ));
-        }
+        $this->assertEquals('Controller_fixt', get_class($default_controller));
+        $this->assertEquals('Controller_fixt2', get_class($second_controller));
     }
 
 }

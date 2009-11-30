@@ -8,33 +8,40 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-if (!defined('PHPUnit_MAIN_METHOD')) {
+if (!defined('PHPUnit_MAIN_METHOD'))
+{
     define('PHPUnit_MAIN_METHOD', 'CiunitAllTests::main');
 }
 
 require_once 'PHPUnit/Framework.php';
 require_once 'PHPUnit/TextUI/TestRunner.php';
 
-require_once dirname(__FILE__).'/../CIUnit.php';
+require_once dirname(__FILE__) . '/../CIUnit.php';
 $files = CIUnit::files('/test.*\.php/', dirname(__FILE__), true);
-foreach($files as $file){
+
+foreach( $files as $file )
+{
     require_once $file;
 }
 
-class CiunitAllTests  extends CIUnitTestSuite
-{
+class CiunitAllTests  extends CIUnitTestSuite {
+
     public static function suite()
     {
         $files = CIUnit::files('/test.*\.php/', dirname(__FILE__));
         $suite = new PHPUnit_Framework_TestSuite('CIUnit tests');
-        foreach($files  as $file){
+
+        foreach( $files  as $file )
+        {
             $file = str_replace('.php', '', $file);
             $suite->addTestSuite($file);
         }
         return $suite;
     }
+    
 }
 
-if (PHPUnit_MAIN_METHOD == 'CiunitAllTests::main') {
+if ( PHPUnit_MAIN_METHOD == 'CiunitAllTests::main' )
+{
     CiunitAllTests::main();
 }

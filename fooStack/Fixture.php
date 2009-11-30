@@ -16,7 +16,8 @@ class Fixture {
 
     function __construct()
     {
-        if (!defined('CIUnit_Version'))
+        //security measure 1: only load if CIUnit is loaded
+        if ( !defined('CIUnit_Version') )
         {
             exit('can\'t load fixture library class when not in test mode!');
         }
@@ -27,35 +28,49 @@ class Fixture {
     */
     function load($table, $fixt)
     {
-        $this->CI = &get_instance();
-        if (!isset($this->CI->db) || !isset($this->CI->db->database))
-        {
-         $this->CI->db = $this->CI->config->item('db');   
-        }
-        //FIXME, this has to be done only once
-        $db_name_len = strlen($this->CI->db->database);
-        if (substr($this->CI->db->database, $db_name_len-5, $db_name_len) != '_test')
-        {
-            die("\nSorry, the name of your test database must end on '_test'.\n".
-                "This prevents deleting important data by accident.\n");
-        }
+        $this->_assign_db();
 
-        # $fixt is supposed to be an associative array outputted by spyc from YAML file
+        // $fixt is supposed to be an associative array
+        // E.g. outputted by spyc from reading a YAML file
         $this->CI->db->simple_query('truncate table ' . $table . ';');
-        foreach ($fixt as $id=>$row)
+
+        foreach ( $fixt as $id => $row )
         {
             foreach ($row as $key=>$val)
             {
                 if ($val !== '')
                 {
-                    $row["`$key`"]=$val;
+                    $row["`$key`"] = $val;
                 }
                 //unset the rest
                 unset($row[$key]);
             }
             $this->CI->db->insert($table, $row);
-            log_message('debug', "fixture: '$id' for $table loaded");
+        }
+
+        $nbr_of_rows = sizeof($fixt);
+        log_message('debug',
+            "Data fixture for db table '$table' loaded - $nbr_of_rows rows");
+    }
+
+    private function _assign_db()
+    {
+        if ( !isset($this->CI->db) ||
+             !isset($this->CI->db->database) )
+        {
+            $this->CI = &get_instance();
+            $this->CI->db = $this->CI->config->item('db');
+        }
+
+        //security measure 2: only load if used database ends on '_test'
+        $len = strlen($this->CI->db->database);
+
+        if ( substr($this->CI->db->database, $len-5, $len) != '_test' )
+        {
+            die("\nSorry, the name of your test database must end on '_test'.\n".
+                "This prevents deleting important data by accident.\n");
         }
     }
 
 }
+

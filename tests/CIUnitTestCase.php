@@ -28,21 +28,23 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
   * names are by convention
   * 'users' -> look for 'users_fixt.yml' fixture: 'fixtures/users_fixt.yml'
   * table is assumed to be named 'users'
+  * dbfixt can have multiple strings as arguments, like so:
+  * $this->dbfix('users', 'items', 'prices');
   */
   function dbfixt()
-  { //can have multiple strings as arguments!
+  {
     $this->CI->db = $this->CI->config->item('db');
-    $fixts = func_get_args();
 
+    $fixts = func_get_args();
     $this->load_fixt($fixts);
 
-    log_message('debug', 'fixtures loaded as instance variables');
-    foreach($fixts as $fixt)
+    foreach( $fixts as $fixt )
     {
       $fixt_name = $fixt . '_fixt';
       CIUnit::$fixture->load($fixt, $this->$fixt_name);
     }
-    log_message('debug', 'all fixtures loaded');
+
+    log_message('debug', 'Table fixtures "' . join('", "', $fixts) . '" loaded');
   }
 
   /**
@@ -59,10 +61,12 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
   */
   protected function load_fixt($fixts)
   {
-    foreach ($fixts as $fixt)
+    foreach ( $fixts as $fixt )
     {
       $fixt_name = $fixt . '_fixt';
-      $this->$fixt_name= CIUnit::$spyc->YAMLLoad(TESTSPATH.'fixtures/' . $fixt . '_fixt.yml');
+      $this->$fixt_name= CIUnit::$spyc->YAMLLoad(
+        TESTSPATH . 'fixtures/' . $fixt . '_fixt.yml'
+      );
     }
   }
 
@@ -74,18 +78,20 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
   function filter_arr($array, $filter)
   {
     $out=array();
-    foreach ($array as $key => $val)
+    foreach ( $array as $key => $val )
     {
         $add_row = false;
-        if (is_array($val))
+        if ( is_array($val) )
         {
             //2-dim array
-            foreach ($filter as $field => $to_match)
+            foreach ( $filter as $field => $to_match )
             {
-               if (isset($val[$field]))
+               if ( isset($val[$field]) )
                {
                  if ($val[$field] == $to_match) $add_row = true;
-                 if ($this->is_regexp($to_match) && preg_match($to_match, $val[$field]))
+
+                 if ($this->is_regexp($to_match) &&
+                     preg_match($to_match, $val[$field]) )
                  {
                     $add_row = true;
                  }
@@ -94,14 +100,29 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
         }
         else
         {
-            //1-dim array
-             $to_match = $filter[0];
-             if ($val == $to_match) $add_row = true;
+             //1-dim array
+             if ( is_string($filter) )
+             {
+                $to_match = $filter;
+             }
+             else
+             {
+                $to_match = $filter[0];
+             }
+
+             if ( $val == $to_match ) $add_row = true;
              //additional key check filter
-             if($this->is_regexp($to_match) && preg_match($to_match, $val)){
+
+             if( $this->is_regexp($to_match) &&
+                 preg_match($to_match, $val) )
+             {
                 $add_row = true;
              }
-             if(isset($filter[1]) && $this->is_regexp($filter[1]) && !preg_match($filter[1], $key)){
+
+             if( isset($filter[1]) &&
+                 $this->is_regexp($filter[1]) &&
+                 !preg_match($filter[1], $key) )
+             {
                 $add_row = false;
              }
         }
@@ -116,8 +137,13 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
     */
     function is_regexp($to_match)
     {
-        if (substr($to_match, 0, 1) == '/' && (substr($to_match,-1) == '/' || substr($to_match,-2) == '/i')) return true;
-        return false;
+        if (substr($to_match, 0, 1) == '/' &&
+            (substr($to_match,-1) == '/' ||
+             substr($to_match,-2) == '/i') )
+        {
+            return True;
+        }
+        return False;
     }
 
     /**
@@ -128,7 +154,7 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
     */
     function timeit($timearr=array())
     {
-        if ($timearr != array())
+        if ( $timearr != array() )
         {
             $end = split(' ', microtime());
             return $end[0]-$timearr[0]+$end[1]-$timearr[1];
@@ -148,17 +174,18 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase {
     {
         //print_r($arr);
         //print_r($arr2);
-        if (0 != count(array_diff_assoc($arr, $arr2)))
+        if( 0 != count(array_diff_assoc($arr, $arr2)) )
         {
             throw new PHPUnit_Framework_AssertionFailedError(
-                 "The given array does not contain the expected array!
-
-Given: ".print_r($arr2, true)."
-Expected to contain: ".print_r($arr, true)
+                 "The given array does not contain the expected array!\n\n" .
+                 "Given: " . print_r($arr2, True) .
+                 "\nExpected to contain: " . print_r($arr, True) .
+                 "\nDifference: " . print_r(array_diff_assoc($arr, $arr2), True)
             );
         }
         //PHPUnit_Framework_Assert::assertEquals(0, count(array_diff_assoc($arr, $arr2)), $msg);
     }
+
 
     /**
     * asserts an integer difference
@@ -168,6 +195,7 @@ Expected to contain: ".print_r($arr, true)
         PHPUnit_Framework_Assert::assertEquals($diff, $count2-$count1);
     }
 
+
     /**
     * asserts an integer difference, with calling of an action in between);
     */
@@ -176,26 +204,54 @@ Expected to contain: ".print_r($arr, true)
         PHPUnit_Framework_Assert::assertEquals($diff, $count2-$count1);
     }
 
+
     /**
     * asserts a key in the error array returned by the "errors()" method of that object
     */
     function assertContainsError($key, $obj)
     {
         $errors = $obj->errors();
-        if (!isset($errors[$key]))
+        if ( !isset($errors[$key]) )
         {
-            throw new PHPUnit_Framework_AssertionFailedError(get_class($obj) . " doesn't contain expected error: ".$key);
+            throw new PHPUnit_Framework_AssertionFailedError(
+                get_class($obj) . " doesn't contain expected error: " . $key
+            );
         }
     }
+
 
     /**
     * asserts a number of elements of $arr
     */
     function assertCounts($count, $arr, $msg='')
     {
-        if ($count != count($arr))
+        if ( $count != count($arr) )
         {
-            throw new PHPUnit_Framework_AssertionFailedError("Array doesn't contain right number of elements.\n\nExpected array count: $count\nGot: ".count($arr));
+            throw new PHPUnit_Framework_AssertionFailedError(
+                "Array doesn't ".
+                "contain right number of elements.\n\nExpected array count: ".
+                "$count\nGot: " . count($arr)
+            );
+        }
+    }
+
+
+    /**
+    * asserts that $num1 and $num2 neglecting a tiny fraction
+    */
+    function assertAlmostEquals($num1, $num2, $msg='')
+    {
+        $diff = abs($num1 - $num2);
+        $epsilon = 0.000001;
+
+        if ( $diff > $epsilon )
+        {
+            throw new PHPUnit_Framework_AssertionFailedError(
+                "The expected number $num1 \n" .
+                "differs from given number $num2 by $diff\n, " .
+                "thus more than $epsilon.\n".
+                $msg
+            );
         }
     }
 
@@ -221,13 +277,17 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
   * 'users' -> look for 'users_fixt.yml' fixture: 'fixtures/users_fixt.yml'
   * table is assumed to be named 'users'
   */
-  function dbfixt(){ //can have multiple strings as arguments!
+  function dbfixt()
+  {
+    //can have multiple strings as arguments!
     $fixts = func_get_args();
-    $this->CI->db = $this->CI->config->item('db');    
+    $this->CI->db = $this->CI->config->item('db');
+
     $this->load_fixt($fixts);
     //log_message('debug', 'fixtures loaded as instance variables');
-    foreach($fixts as $fixt){
-      $fixt_name = $fixt.'_fixt';
+    foreach( $fixts as $fixt )
+    {
+      $fixt_name = $fixt . '_fixt';
       CIUnit::$fixture->load($fixt, $this->$fixt_name);
     }
     //log_message('debug', 'all fixtures loaded');
@@ -236,7 +296,8 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
   /**
   * fixture wrapper, for arbitrary number of arguments
   */
-  function fixt(){
+  function fixt()
+  {
     $fixts = func_get_args();
     $this->load_fixt($fixts);
   }
@@ -244,10 +305,13 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
   /**
   * loads a fixture from a yaml file
   */
-  protected function load_fixt($fixts){
-    foreach($fixts as $fixt){
-      $fixt_name = $fixt.'_fixt';
-      $this->$fixt_name= CIUnit::$spyc->YAMLLoad(TESTSPATH.'fixtures/'.$fixt.'_fixt.yml');
+  protected function load_fixt($fixts)
+  {
+    foreach( $fixts as $fixt ){
+      $fixt_name = $fixt . '_fixt';
+      $this->$fixt_name= CIUnit::$spyc->YAMLLoad(
+        TESTSPATH . 'fixtures/' . $fixt . '_fixt.yml'
+      );
     }
   }
 
@@ -256,29 +320,48 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
   * are satisfied by the array. $value can be a regular expression for 2dim arr,
   * or $key if its a one dim array
   */
-  function filter_arr($array, $filter){
+  function filter_arr($array, $filter)
+  {
     $out=array();
-    foreach($array as $key => $val){
+
+    foreach( $array as $key => $val )
+    {
         $add_row=false;
-        if(is_array($val)){
+        if( is_array($val) )
+        {
             //2-dim array
-            foreach($filter as $field => $to_match){
-               if(isset($val[$field])){
-                 if($val[$field] == $to_match) $add_row=true;
-                 if($this->is_regexp($to_match) && preg_match($to_match, $val[$field])){
+            foreach( $filter as $field => $to_match )
+            {
+               if( isset($val[$field]) )
+               {
+                 if( $val[$field] == $to_match ) $add_row=true;
+
+                 if( $this->is_regexp($to_match) &&
+                     preg_match($to_match, $val[$field]) )
+                 {
                     $add_row=true;
                  }
                }
             }
-        }else{
+        }
+        else
+        {
             //1-dim array
              $to_match=$filter[0];
-             if($val == $to_match) $add_row=true;
+
+             if( $val == $to_match ) $add_row=true;
+
              //additional key check filter
-             if($this->is_regexp($to_match) && preg_match($to_match, $val)){
+             if( $this->is_regexp($to_match) &&
+                 preg_match($to_match, $val) )
+             {
                 $add_row=true;
              }
-             if(isset($filter[1]) && $this->is_regexp($filter[1]) && !preg_match($filter[1], $key)){
+
+             if( isset($filter[1]) &&
+                 $this->is_regexp($filter[1]) &&
+                 !preg_match($filter[1], $key) )
+             {
                 $add_row=false;
              }
         }
@@ -291,8 +374,14 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
     * very simple test to see if string looks like a regular expression
     * but its just a first check for the obvious
     */
-    function is_regexp($to_match){
-        if(substr($to_match, 0, 1)=='/' && (substr($to_match,-1)=='/' || substr($to_match,-2)=='/i')) return true;
+    function is_regexp($to_match)
+    {
+        if( substr($to_match, 0, 1) == '/' &&
+           (substr($to_match,-1) == '/' ||
+            substr($to_match,-2) == '/i') )
+        {
+            return False;
+        }
         return false;
     }
 
@@ -302,64 +391,104 @@ class CIUnit_TestCase_Selenium extends PHPUnit_Extensions_SeleniumTestCase {
     * stop timer with: $taken_time = $this->timeit($start);
     * can be done unlimited times for arbitrary starting points
     */
-    function timeit($timearr=array()){
-        if($timearr!=array()){
+    function timeit( $timearr=array() )
+    {
+        if( $timearr!=array() )
+        {
             $end = split(' ', microtime());
             return $end[0]-$timearr[0]+$end[1]-$timearr[1];
-        }else{
+        }
+        else
+        {
             return split(' ', microtime());
         }
     }
 
 //=== Custom CIUnit Assertions ===
 
+
     /**
     * asserts that $arr2 wholly contains $arr
     */
-    function assertContaining($arr, $arr2, $msg=''){
+    function assertContaining($arr, $arr2, $msg='')
+    {
         //print_r($arr);
         //print_r($arr2);
-        if(0 != count(array_diff_assoc($arr, $arr2))){
+        if( 0 != count(array_diff_assoc($arr, $arr2)) )
+        {
             throw new PHPUnit_Framework_AssertionFailedError(
-                 "The given array does not contain the expected array!
-
-Given: ".print_r($arr2, true)."
-Expected to contain: ".print_r($arr, true)
+                 "The given array does not contain the expected array!\n\n" .
+                 "Given: " . print_r($arr2, True) .
+                 "\nExpected to contain: " . print_r($arr, True) .
+                 "\nDifference: " . print_r(array_diff_assoc($arr, $arr2), True)
             );
         }
         //PHPUnit_Framework_Assert::assertEquals(0, count(array_diff_assoc($arr, $arr2)), $msg);
     }
 
+
     /**
     * asserts an integer difference
     */
-    function assertDifference($diff, $count1, $count2){
+    function assertDifference($diff, $count1, $count2)
+    {
         PHPUnit_Framework_Assert::assertEquals($diff, $count2-$count1);
     }
+
 
     /**
     * asserts an integer difference, with calling of an action in between);
     */
-    function assertDifferenceOfAction($diff, $count1, $action, $count2){
-        PHPUnit_Framework_Assert::assertEquals($diff, $count2-$count1);
+    function assertDifferenceOfAction($diff, $count1, $action, $count2)
+    {
+        PHPUnit_Framework_Assert::assertEquals($diff, $count2 - $count1);
     }
+
 
     /**
     * asserts a key in the error array returned by the "errors()" method of that object
     */
-    function assertContainsError($key, $obj){
+    function assertContainsError($key, $obj)
+    {
         $errors = $obj->errors();
-        if(!isset($errors[$key])){
-            throw new PHPUnit_Framework_AssertionFailedError(get_class($obj)." doesn't contain expected error: ".$key);
+        if( !isset($errors[$key]) )
+        {
+            throw new PHPUnit_Framework_AssertionFailedError(get_class($obj) .
+            " doesn't contain expected error: " . $key);
         }
     }
+
 
     /**
     * asserts a number of elements of $arr
     */
-    function assertCounts($count, $arr, $msg=""){
-        if($count!=count($arr)){
-            throw new PHPUnit_Framework_AssertionFailedError("Array doesn't contain right number of elements.\n\nExpected array count: $count\nGot: ".count($arr));
+    function assertCounts($count, $arr, $msg="")
+    {
+        if( $count!=count($arr) )
+        {
+            throw new PHPUnit_Framework_AssertionFailedError(
+                "Array doesn't contain right number of elements.\n\n" .
+                "Expected array count: $count\nGot: " . count($arr)
+            );
+        }
+    }
+
+    /**
+    * asserts that $num1 and $num2 neglecting a tiny fraction
+    */
+    function assertAlmostEquals($num1, $num2, $msg='')
+    {
+        $diff = abs($num1 - $num2);
+        $epsilon = 0.000001;
+
+        if ( $diff > $epsilon )
+        {
+            throw new PHPUnit_Framework_AssertionFailedError(
+                "The expected number $num1 \n" .
+                "differs from given number $num2 by $diff\n, " .
+                "thus more than $epsilon.\n".
+                $msg
+            );
         }
     }
 
