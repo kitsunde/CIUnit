@@ -12,7 +12,7 @@ require_once 'PHPUnit/Framework.php';
 require_once 'CIUnitTestCase.php';
 require_once 'CIUnitTestSuite.php';
 
-define('CIUnit_Version', '0.15');
+define('CIUnit_Version', '0.16');
 
 //load CIUnit users settings 
 include_once 'settings.php';
