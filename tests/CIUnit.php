@@ -7,8 +7,6 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-error_reporting(E_ALL | E_STRICT);
-
 //load Testing
 require_once 'PHPUnit/Framework.php';
 require_once 'CIUnitTestCase.php';
@@ -20,7 +18,9 @@ define('CIUnit_Version', '0.15');
 include_once 'settings.php';
 
 //load CodeIgniter
-include_once $path_to_codeigniter . '/index.php';
+include_once $path_to_codeigniter . 'index.php';
+
+// die("\n\n" . $path_to_codeigniter . 'index.php');
 
 //path to your 'tests' directory
 define('TESTSPATH', str_replace('\\', '/', realpath(dirname(__FILE__))).'/');
@@ -239,7 +239,7 @@ function viewvars()
 
 //=== and off we go ===
 $CI = &set_controller();
-$CI->load->library('Spyc');
-$CI->load->library('Fixture');
-CIUnit::$spyc = &$CI->spyc;
+// $CI->load->library('fooStack/Spyc');
+// CIUnit::$spyc = &$CI->spyc;
+$CI->load->library('fooStack/Fixture');
 CIUnit::$fixture = &$CI->fixture;

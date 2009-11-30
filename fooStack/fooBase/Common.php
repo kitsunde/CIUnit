@@ -1,16 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-/*
-* fooStack, CIUnit for CodeIgniter
-* Copyright (c) 2008-2009 Clemens Gruenberger
-* Released under the MIT license, see:
-* http://www.opensource.org/licenses/mit-license.php
-*/
-
-/*
-* CodeIgniter file modified for fooStack / CIUnit
-*/
-
 /**
  * CodeIgniter
  *
@@ -18,7 +7,7 @@
  *
  * @package		CodeIgniter
  * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2006, EllisLab, Inc.
+ * @copyright	Copyright (c) 2008 - 2009, EllisLab, Inc.
  * @license		http://codeigniter.com/user_guide/license.html
  * @link		http://codeigniter.com
  * @since		Version 1.0
@@ -28,34 +17,51 @@
 // ------------------------------------------------------------------------
 
 /**
- * Common Functions
- *
- * Loads the base classes and executes the request.
- *
- * @package		CodeIgniter
- * @subpackage	codeigniter
- * @category	Common Functions
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/
- */
+* Determines if the current version of PHP is greater then the supplied value
+*
+* Since there are a few places where we conditionally test for PHP > 5
+* we'll set a static variable.
+*
+* @access	public
+* @param	string
+* @return	bool
+*/
+function is_php($version = '5.0.0')
+{
+	static $_is_php;
+	$version = (string)$version;
+	
+	if ( ! isset($_is_php[$version]))
+	{
+		$_is_php[$version] = (version_compare(PHP_VERSION, $version) < 0) ? FALSE : TRUE;
+	}
 
-// ------------------------------------------------------------------------
-
+	return $_is_php[$version];
+}
+// FooStack CiUnit Add:
 include(dirname(__FILE__) . '/config.php');
+// ------------------------------------------------------------------------
 
 /**
  * Tests for file writability
  *
- * is_writable() returns TRUE on Windows servers
- * when you really can't write to the file
- * as the OS reports to PHP as FALSE only if the
- * read-only attribute is marked.  Ugh?
+ * is_writable() returns TRUE on Windows servers when you really can't write to 
+ * the file, based on the read-only attribute.  is_writable() is also unreliable
+ * on Unix servers if safe_mode is on. 
  *
  * @access	private
  * @return	void
  */
 function is_really_writable($file)
-{
+{	
+	// If we're on a Unix server with safe_mode off we call is_writable
+	if (DIRECTORY_SEPARATOR == '/' AND @ini_get("safe_mode") == FALSE)
+	{
+		return is_writable($file);
+	}
+
+	// For windows servers and safe_mode "on" installations we'll actually
+	// write a file then read it.  Bah...
 	if (is_dir($file))
 	{
 		$file = rtrim($file, '/').'/'.md5(rand(1,100));
@@ -97,6 +103,7 @@ function &load_class($class, $instantiate = TRUE)
 {
 	static $objects = array();
 
+    /* fooStack CIUnit Add - Start */
     $prefix = config_item('subclass_prefix');
     $fs = foo_config();
     $fooprefix = $fs['prefix'];
@@ -113,7 +120,7 @@ function &load_class($class, $instantiate = TRUE)
     }
     //echo "folder:".print_r($folders,1);
     //echo "class:".print_r($class,1)." *\n";
-
+    /* fooStack CIUnit Add - End */
 
 
 	// Does the class exist?  If so, we're done...
@@ -125,39 +132,42 @@ function &load_class($class, $instantiate = TRUE)
 	// user extension class?
 	if (file_exists(APPPATH.'libraries/'.$folders.$prefix.$class.EXT))
 	{
-        // require Base Class
 		require(BASEPATH.'libraries/'.$class.EXT);
 
-
+        /* fooStack CIUnit Add - start */
         // extend with fooStack class
         if(file_exists(FSPATH.$fooprefix.$class.EXT)){
             require(FSPATH.$fooprefix.$class.EXT);
             $is_fooclass = TRUE;
         }
+        /* fooStack CIUnit Add - End */
 
         // load user class
 		require(APPPATH.'libraries/'.$folders.$prefix.$class.EXT);
 		$is_subclass = TRUE;
 	}
-
 	else
-    {
+	{
         // independent user class?
         if (file_exists(APPPATH.'libraries/'.$folders.$class.EXT))
 		{
             //load it
 			require(APPPATH.'libraries/'.$folders.$class.EXT);
 			$is_subclass = FALSE;
+            /* fooStack CIUnit Add - start */
             $is_fooclass = FALSE;
+            /* fooStack CIUnit Add - end */
 		}
 		else
 		{
             // so it must be a base class / or foostack class
 			require(BASEPATH.'libraries/'.$class.EXT);
+            /* fooStack CIUnit Add - start */
             if(file_exists(FSPATH.$fooprefix.$class.EXT)){
                 require(FSPATH.$fooprefix.$class.EXT);
                 $is_fooclass = TRUE;
             }
+            /* fooStack CIUnit Add - end */
 			$is_subclass = FALSE;
 		}
 	}
@@ -171,8 +181,8 @@ function &load_class($class, $instantiate = TRUE)
 	if ($is_subclass == TRUE)
 	{
 		$name = $prefix.$class;
-        //echo "Subclass ". $name . " loading..";
-		$objects[$class] = & new $name();
+
+		$objects[$class] =& instantiate_class(new $name());
 		return $objects[$class];
 	}
 
@@ -181,10 +191,25 @@ function &load_class($class, $instantiate = TRUE)
     //is there a class of this name? if not, add prefix
 	$name = (class_exists($class)) ? $class : $prefix.$class;
 
-    //echo "Class ". $name. " loading..";
-
-	$objects[$class] =& new $name();
+	$objects[$class] =& instantiate_class(new $name());
 	return $objects[$class];
+}
+
+/**
+ * Instantiate Class
+ *
+ * Returns a new class object by reference, used by load_class() and the DB class.
+ * Required to retain PHP 4 compatibility and also not make PHP 5.3 cry.
+ *
+ * Use: $obj =& instantiate_class(new Foo());
+ * 
+ * @access	public
+ * @param	object
+ * @return	object
+ */
+function &instantiate_class(&$class_object)
+{
+	return $class_object;
 }
 
 
@@ -283,7 +308,7 @@ function find_load_order($class){
 	{
 		$name = $prefix.$class;
         echo "Subclass ". $name . " loading..";
-		$objects[$class] =& new $name();
+		$objects[$class] =& instantiate_class(new $name());
 		return $objects[$class];
 	}
 
@@ -292,7 +317,7 @@ function find_load_order($class){
 
     //echo "Class ". $name. " loading..";
 
-	$objects[$class] =& new $name();
+	$objects[$class] =& instantiate_class(new $name());
 	return $objects[$class];
 
 }
@@ -363,10 +388,10 @@ function config_item($item)
 * @access	public
 * @return	void
 */
-function show_error($message)
+function show_error($message, $status_code = 500)
 {
 	$error =& load_class('Exceptions');
-	echo $error->show_error('An Error Was Encountered', $message);
+	echo $error->show_error('An Error Was Encountered', $message, 'error_general', $status_code);
 	exit;
 }
 
@@ -408,9 +433,94 @@ function log_message($level = 'error', $message, $php_error = FALSE)
 		return;
 	}
 
-	$LOG =& load_class('Log');	
+	$LOG =& load_class('Log');
 	$LOG->write_log($level, $message, $php_error);
 }
+
+
+/**
+ * Set HTTP Status Header
+ *
+ * @access	public
+ * @param	int 	the status code
+ * @param	string	
+ * @return	void
+ */
+function set_status_header($code = 200, $text = '')
+{
+	$stati = array(
+						200	=> 'OK',
+						201	=> 'Created',
+						202	=> 'Accepted',
+						203	=> 'Non-Authoritative Information',
+						204	=> 'No Content',
+						205	=> 'Reset Content',
+						206	=> 'Partial Content',
+
+						300	=> 'Multiple Choices',
+						301	=> 'Moved Permanently',
+						302	=> 'Found',
+						304	=> 'Not Modified',
+						305	=> 'Use Proxy',
+						307	=> 'Temporary Redirect',
+
+						400	=> 'Bad Request',
+						401	=> 'Unauthorized',
+						403	=> 'Forbidden',
+						404	=> 'Not Found',
+						405	=> 'Method Not Allowed',
+						406	=> 'Not Acceptable',
+						407	=> 'Proxy Authentication Required',
+						408	=> 'Request Timeout',
+						409	=> 'Conflict',
+						410	=> 'Gone',
+						411	=> 'Length Required',
+						412	=> 'Precondition Failed',
+						413	=> 'Request Entity Too Large',
+						414	=> 'Request-URI Too Long',
+						415	=> 'Unsupported Media Type',
+						416	=> 'Requested Range Not Satisfiable',
+						417	=> 'Expectation Failed',
+
+						500	=> 'Internal Server Error',
+						501	=> 'Not Implemented',
+						502	=> 'Bad Gateway',
+						503	=> 'Service Unavailable',
+						504	=> 'Gateway Timeout',
+						505	=> 'HTTP Version Not Supported'
+					);
+
+	if ($code == '' OR ! is_numeric($code))
+	{
+		show_error('Status codes must be numeric', 500);
+	}
+
+	if (isset($stati[$code]) AND $text == '')
+	{				
+		$text = $stati[$code];
+	}
+	
+	if ($text == '')
+	{
+		show_error('No status text available.  Please check your status code number or supply your own message text.', 500);
+	}
+	
+	$server_protocol = (isset($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : FALSE;
+
+	if (substr(php_sapi_name(), 0, 3) == 'cgi')
+	{
+		header("Status: {$code} {$text}", TRUE);
+	}
+	elseif ($server_protocol == 'HTTP/1.1' OR $server_protocol == 'HTTP/1.0')
+	{
+		header($server_protocol." {$code} {$text}", TRUE, $code);
+	}
+	else
+	{
+		header("HTTP/1.1 {$code} {$text}", TRUE, $code);
+	}
+}
+
 
 /**
 * Exception Handler

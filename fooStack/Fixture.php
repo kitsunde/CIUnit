@@ -1,5 +1,4 @@
 <?php
-
 /*
 * fooStack, CIUnit for CodeIgniter
 * Copyright (c) 2008-2009 Clemens Gruenberger
