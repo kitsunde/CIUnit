@@ -140,6 +140,14 @@ class fooLoader extends CI_Loader {
 			}
 		} // END FOREACH
 
+        // Subfolder? (@Mario "Kuroir" Ricalde)
+		if ($folders == '')
+		{
+			$path = strtolower($class).'/'.$class;
+			return $this->_ci_load_class($path, $params);
+		}
+
+
 		// If we got this far we were unable to find the requested class.
 		// We do not issue errors if the load call failed due to a duplicate request
 		if ($is_duplicate == FALSE)
