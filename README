@@ -1,6 +1,8 @@
 CIUnit Foostack
     Originally created   by: Clemens "rafsoaken" Gruenberger
-    Modified and Updated by: Mario "Kuroir" Ricalde.
+    Modified and Updated by:
+	- Mario "Kuroir" Ricalde
+	- Grzegorz "Grisha" Godlewski
 
 Notes:
     - CIUnit was updated to work completely with CodeIgniter 1.7.2
