@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @group Helper
+ */
+
 class HelperTest extends CIUnit_TestCase
 {
     public function setUp()

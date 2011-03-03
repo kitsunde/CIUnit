@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @group Lib
+ */
+
 class SomeLibTest extends CIUnit_TestCase
 {
     public function setUp()

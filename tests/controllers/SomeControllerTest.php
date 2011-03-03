@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * @group Controller
+ */
+
 class SomeControllerTest extends CIUnit_TestCase
 {
     public function setUp()

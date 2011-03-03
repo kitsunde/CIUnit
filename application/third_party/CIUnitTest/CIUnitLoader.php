@@ -11,6 +11,12 @@
 * CodeIgniter source modified for fooStack / CIUnit
 */
 
+/**
+ * ============================================================================
+ * Not that you will need to update the parent class if you have the class
+ * MY_Loader.
+ * ============================================================================
+ */
 class CIUnitLoader extends CI_Loader {
 
     var $_ci_loaded_files = array();
