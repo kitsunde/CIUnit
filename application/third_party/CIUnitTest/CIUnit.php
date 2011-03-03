@@ -11,15 +11,15 @@
 require_once 'CIUnitTestCase.php';
 require_once 'CIUnitTestSuite.php';
 
-define('CIUnit_Version', '0.17');
-
+/*
 echo "Loading new CI\n";
 //load CodeIgniter
 include_once(dirname(__FILE__).'/index.php');
 echo "After Load\n";
+*/
 
 //path to your 'tests' directory
-define('TESTSPATH', APPPATH.'unit_tests/');
+define('TESTSPATH', APPPATH.'../tests/');
 
 /**
 * CIUnit Class
@@ -63,7 +63,7 @@ class CIUnit {
         return self::$instance;
     }
 
-    public static function &set_controller($controller = 'Controller', $path=FALSE)
+    public static function &set_controller($controller = 'CI_Controller', $path=FALSE)
     {
         $controller_name = array_pop(explode('/', $controller));
         //echo "\nc name ".$controller_name;
@@ -71,13 +71,13 @@ class CIUnit {
         if ($controller_name == self::$current)
         {
             //we have nothing to do, return current controller
-            //echo "current found!";
+            //echo "current found!"; die();
             output(); viewvars();
             return self::$controller;
         }
 
         //the current controller must be archieved before littered
-        $loader = &load_class('Loader');
+        $loader = &load_class('Loader', 'core');
         
         
         if (isset(self::$controllers[self::$current]))
@@ -138,7 +138,10 @@ class CIUnit {
                                                    );
             self::$controller = &self::$controllers[$controller_name]['address'];                                                   
         }
-        CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
+        
+        //var_dump(self::$controller); die();
+        
+        //CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         return self::$controller;
     }
 
@@ -196,7 +199,7 @@ function &get_CIU()
 /**
 * sets CI controller
 */
-function &set_controller($controller = 'Controller', $path=FALSE)
+function &set_controller($controller = 'CI_Controller', $path=FALSE)
 {
 	return CIUnit::set_controller($controller, $path);
 }
