@@ -75,10 +75,9 @@ class CIUnit {
             output(); viewvars();
             return self::$controller;
         }
-
-        //the current controller must be archieved before littered
-        $loader = &load_class('Loader', 'core');
         
+        // the current controller must be archieved before littered
+        $loader = &load_class('Loader', 'core');
         
         if (isset(self::$controllers[self::$current]))
         {
@@ -105,7 +104,7 @@ class CIUnit {
         //the requested controller was loaded before?
         if ( isset(self::$controllers[$controller_name]) )
         {
-            //echo "saved found! $controller_name";
+            echo "saved found! $controller_name";
             //load it
             $old = &self::$controllers[$controller_name];
             self::$controller = &$old['address'];
@@ -116,7 +115,7 @@ class CIUnit {
         }
         else
         {
-            //echo "load new $controller_name";
+            echo "load new $controller_name";
             //it was not loaded before
             if (!class_exists($controller_name))
             {

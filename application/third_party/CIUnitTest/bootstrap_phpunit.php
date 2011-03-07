@@ -1,5 +1,7 @@
 <?php
 
+// Autoload the friggn' thing
+require_once ('PHPUnit/Autoload.php');
 
 /*
  *---------------------------------------------------------------
@@ -11,7 +13,7 @@
  * For more info visit:  http://www.php.net/error_reporting
  *
  */
-	error_reporting(E_ALL);
+    error_reporting(E_ALL);
 
 /*
  *---------------------------------------------------------------
@@ -23,7 +25,11 @@
  * as this file.
  *
  */
-	$system_path = "../system";
+    // The tests should be run from inside the tests folder.
+    // The assumption is that the tests folder is in the same
+    // directory path system.  If it is not, update the paths
+    // appropriately
+    $system_path = "../system";
 
 /*
  *---------------------------------------------------------------
@@ -39,7 +45,19 @@
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = "../application";
+    // The tests should be run from inside the tests folder.
+    // The assumption is that the tests folder is in the same
+    // directory as the application folder.  If it is not, update
+    // the paths appropriately.
+    $application_folder = "../application";
+    
+
+/**
+ * CIUnit Folder
+ * 
+ */
+ 
+ $ciunit_folder = "../application/third_party/CIUnitTest";
 
 /*
  * --------------------------------------------------------------------
@@ -61,15 +79,15 @@
  * Un-comment the $routing array below to use this feature
  *
  */
-	// The directory name, relative to the "controllers" folder.  Leave blank
-	// if your controller is not in a sub-folder within the "controllers" folder
-	// $routing['directory'] = '';
-
-	// The controller class file name.  Example:  Mycontroller.php
-	// $routing['controller'] = '';
-
-	// The controller function you wish to be called.
-	// $routing['function']	= '';
+    // The directory name, relative to the "controllers" folder.  Leave blank
+    // if your controller is not in a sub-folder within the "controllers" folder
+    // $routing['directory'] = '';
+    
+    // The controller class file name.  Example:  Mycontroller.php
+    $routing['controller'] = 'CIU_Controller.php';
+    
+    // The controller function you wish to be called.
+    // $routing['function'] = '';
 
 
 /*
@@ -87,7 +105,10 @@
  * Un-comment the $assign_to_config array below to use this feature
  *
  */
-	// $assign_to_config['name_of_config_item'] = 'value of config item';
+    // This needs to be set before the front controller can set it
+    // since we are extending core files...
+    // @see ./core/common.php
+    //$assign_to_config['ciu_subclass_prefix'] = 'CUI_';
 
 
 
@@ -96,62 +117,65 @@
 // --------------------------------------------------------------------
 
 
-
-
 /*
  * ---------------------------------------------------------------
  *  Resolve the system path for increased reliability
  * ---------------------------------------------------------------
  */
-	if (realpath($system_path) !== FALSE)
-	{
-		$system_path = realpath($system_path).'/';
-	}
+    if (realpath($system_path) !== FALSE)
+    {
+        $system_path = realpath($system_path).'/';
+    }
 
-	// ensure there's a trailing slash
-	$system_path = rtrim($system_path, '/').'/';
+    // ensure there's a trailing slash
+    $system_path = rtrim($system_path, '/').'/';
     
-	// Is the system path correct?
-	if ( ! is_dir($system_path))
-	{
-		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
-	}
+    // Is the system path correct?
+    if ( ! is_dir($system_path))
+    {
+        exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+    }
 
 /*
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
  */
-	// The name of THIS file
-	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+    // The name of THIS file
+    define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-	// The PHP file extension
-	define('EXT', '.php');
+    // The PHP file extension
+    define('EXT', '.php');
 
-	// Path to the system folder
-	define('BASEPATH', str_replace("\\", "/", $system_path));
+    // Path to the system folder
+    define('BASEPATH', str_replace("\\", "/", $system_path));
 
-	// Path to the front controller (this file)
-	define('FCPATH', str_replace(SELF, '', __FILE__));
+    // Path to the front controller (this file)
+    define('FCPATH', str_replace(SELF, '', __FILE__));
 
-	// Name of the "system folder"
-	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+    // Name of the "system folder"
+    define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
 
-	// The path to the "application" folder
-	if (is_dir($application_folder))
-	{
-		define('APPPATH', $application_folder.'/');
-	}
-	else
-	{
-		if ( ! is_dir(BASEPATH.$application_folder.'/'))
-		{
-			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
-		}
+    // The path to the "application" folder
+    if (is_dir($application_folder))
+    {
+        define('APPPATH', $application_folder.'/');
+    }
+    else
+    {
+        if ( ! is_dir(BASEPATH.$application_folder.'/'))
+        {
+            exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+        }
 
-		define('APPPATH', BASEPATH.$application_folder.'/');
-	}
+        define('APPPATH', BASEPATH.$application_folder.'/');
+    }
+    
+    // Path the CIUnit
+    define('CIUPATH', $ciunit_folder . '/');
+    
+    
 
 /*
  * --------------------------------------------------------------------
@@ -162,7 +186,8 @@
  *
  */
 
-require_once APPPATH.'third_party/CIUnitTest/core/CodeIgniter'.EXT;
+// Load the CIUnit core
+require_once CIUPATH . 'core/CodeIgniter' . EXT;
 
-require_once 'PHPUnit/TextUI/TestRunner.php';
+//require_once 'PHPUnit/TextUI/TestRunner.php';
 require_once 'CIUnit.php';

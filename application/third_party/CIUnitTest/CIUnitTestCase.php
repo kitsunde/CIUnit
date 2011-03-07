@@ -10,11 +10,11 @@
 /**
  * Extending the default phpUnit Framework_TestCase Class
  * providing eg. fixtures, custom assertions, utilities etc.
- * 
- * This class is abstract so that an instance of it cannot be created.
  */
 class CIUnit_TestCase extends PHPUnit_Framework_TestCase
 {
+    // ------------------------------------------------------------------------
+    
     /**
      * An associative array of table names.  The order of the fixtures
      * determines the loading and unloading sequence of the fixtures. This is 
@@ -40,12 +40,16 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      */
     protected $tables = array();
     
+    // ------------------------------------------------------------------------
+    
     /**
      * The CodeIgniter Framework Instance
      *
      * @var object
      */
     public $CI;
+    
+    // ------------------------------------------------------------------------
     
     /**
      * Constructor

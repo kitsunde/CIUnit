@@ -7,11 +7,16 @@
 * http://www.opensource.org/licenses/mit-license.php
 */
 
-define('FSPATH', APPPATH.'libraries/fooStack/');
 
+//define('FSPATH', APPPATH.'libraries/fooStack/');
+
+/*
 function foo_config()
 {
     $config['foostack']['prefix'] = 'CIUnit';
     $config['foostack']['active_plugins'] = array('fooStack', 'ME');
     return $config['foostack'];
 }
+*/
+
+$config['ciu_subclass_prefix'] = 'CIU_';

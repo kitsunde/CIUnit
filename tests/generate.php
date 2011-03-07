@@ -1,5 +1,7 @@
 <?php
 
+echo 'with php'; die();
+
 include_once dirname(__FILE__) . '/CIUnit.php';
 include_once dirname(__FILE__) . '/getops.php';
 

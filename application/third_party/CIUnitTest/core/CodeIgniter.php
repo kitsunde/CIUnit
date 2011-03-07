@@ -39,7 +39,7 @@
  *  Load the global functions
  * ------------------------------------------------------
  */
-    require(BASEPATH.'core/Common'.EXT);
+    require(CIUPATH.'core/Common'.EXT);
 
 /*
  * ------------------------------------------------------
@@ -166,7 +166,7 @@
     $GLOBALS['URI'] =& $RTR;
     
     $RTR->_set_routing();
-
+    
     // Set any routing overrides that may exist in the main index file
     if (isset($routing))
     {
@@ -186,6 +186,8 @@
  *  Is there a valid cache file?  If so, we're done...
  * ------------------------------------------------------
  */
+    // I am not going to worry about a cache, right?
+    /*
     if ($EXT->_call_hook('cache_override') === FALSE)
     {
         if ($OUT->_display_cache($CFG, $URI) == TRUE)
@@ -193,6 +195,7 @@
             exit;
         }
     }
+    */
 
 /*
  * ------------------------------------------------------
@@ -223,11 +226,12 @@
         return CI_Controller::get_instance();
     }
     
+    if (file_exists(APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller'.EXT))
+    {
+        require APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller'.EXT;
+    }
+    
     if (defined('CIUnit') === false) {
-        if (file_exists(APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller'.EXT))
-        {
-            require APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller'.EXT;
-        }
         
         // Load the local application controller
         // Note: The Router class automatically validates the controller path using the router->_validate_request().

@@ -11,7 +11,14 @@
 * CodeIgniter source modified for fooStack / CIUnit
 */
 
-class CIUnitOutput extends CI_Output {
+/**
+ * ============================================================================
+ * Note that you will need to update the parent class if you have the class
+ * MY_Output.
+ * ============================================================================
+ */
+
+class CIU_Output extends CI_Output {
 
     function __construct()
     {
