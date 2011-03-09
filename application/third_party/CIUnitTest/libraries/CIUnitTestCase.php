@@ -64,8 +64,6 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
         $this->CI = get_instance();
         
         log_message('debug', get_class($this).' CIUnit_TestCase initialized');
-        
-        show_error('Hi');
     }
     
     /**

@@ -56,8 +56,7 @@ require_once ('PHPUnit/Autoload.php');
  * CIUnit Folder
  * 
  */
- 
- $ciunit_folder = "../application/third_party/CIUnitTest";
+$ciunit_folder = "../application/third_party/CIUnitTest";
  
 /**
  * Test Folder
@@ -144,4 +143,4 @@ $tests_folder = "../tests";
 require_once CIUPATH . 'core/CodeIgniter' . EXT;
 
 //
-require_once 'CIUnit.php';
+require_once CIUPATH. 'libraries/CIUnit.php';

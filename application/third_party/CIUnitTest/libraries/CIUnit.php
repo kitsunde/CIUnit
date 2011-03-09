@@ -8,8 +8,7 @@
 */
 
 //load Testing
-require_once 'CIUnitTestCase.php';
-//require_once 'CIUnitTestSuite.php';
+require_once CIUPATH . 'libraries/CIUnitTestCase.php';
 
 /**
 * CIUnit Class
@@ -228,13 +227,11 @@ function viewvars()
 //=== and off we go ===
 $CI = &set_controller('CIU_Controller', CIUPATH . 'core/');
 
-require_once('spyc/spyc.php');
+require_once(CIUPATH . 'libraries/spyc/spyc.php');
 
-//$CI->spyc = new Spyc();
-//CIUnit::$spyc = &$CI->spyc;
 CIUnit::$spyc = new Spyc();
 
-require_once('Fixture.php');
+require_once(CIUPATH . 'libraries/Fixture.php');
 
 $CI->fixture = new Fixture();
 CIUnit::$fixture = &$CI->fixture;

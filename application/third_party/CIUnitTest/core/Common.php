@@ -236,13 +236,13 @@
         }
         
         // Fetch the CIU config file
-        if ( ! file_exists(CIUPATH .'config'.EXT))
+        if ( ! file_exists(CIUPATH .'config/config'.EXT))
         {
             exit('The configuration file does not exist.');
         }
         else
         {
-            require(CIUPATH.'config'.EXT);
+            require(CIUPATH.'config/config'.EXT);
         }
 
         // Does the $config array exist in the file?
