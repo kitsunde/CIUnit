@@ -6,7 +6,7 @@
     bootstrap="../application/third_party/CIUnitTest/bootstrap_phpunit.php">
     <php>
         <const name="CIUnit" value="0.17"/>
-        <server name="SERVER_NAME" value="http://eric.lbgdev.com" />
+        <server name="SERVER_NAME" value="http://example.com" />
     </php>
     <testsuites>
         <testsuite name="ControllerTests">
