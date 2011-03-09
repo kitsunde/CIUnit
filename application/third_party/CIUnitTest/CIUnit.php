@@ -9,17 +9,7 @@
 
 //load Testing
 require_once 'CIUnitTestCase.php';
-require_once 'CIUnitTestSuite.php';
-
-/*
-echo "Loading new CI\n";
-//load CodeIgniter
-include_once(dirname(__FILE__).'/index.php');
-echo "After Load\n";
-*/
-
-//path to your 'tests' directory
-define('TESTSPATH', APPPATH.'../tests/');
+//require_once 'CIUnitTestSuite.php';
 
 /**
 * CIUnit Class
@@ -104,7 +94,7 @@ class CIUnit {
         //the requested controller was loaded before?
         if ( isset(self::$controllers[$controller_name]) )
         {
-            echo "saved found! $controller_name";
+            //echo "saved found! $controller_name";
             //load it
             $old = &self::$controllers[$controller_name];
             self::$controller = &$old['address'];
@@ -115,11 +105,11 @@ class CIUnit {
         }
         else
         {
-            echo "load new $controller_name";
+            //echo "load new $controller_name";
             //it was not loaded before
             if (!class_exists($controller_name))
             {
-                if ($path)
+                if ($path && file_exists($path . $controller . EXT))
                 {
                      include_once($path . $controller . EXT);
                 }
@@ -128,8 +118,8 @@ class CIUnit {
                     include_once(APPPATH . 'controllers/' . $controller . EXT);
                 }
             }
-                                             
-            self::$current = $controller_name;
+            
+            self::$current = new $controller_name;
             
             self::$controllers[$controller_name] = Array(
                                                    'address' => new $controller_name(),
@@ -236,12 +226,13 @@ function viewvars()
 }
 
 //=== and off we go ===
-$CI = &set_controller();
+$CI = &set_controller('CIU_Controller', CIUPATH . 'core/');
 
-require_once('Spyc/spyc.php');
+require_once('spyc/spyc.php');
 
-$CI->spyc = new Spyc();
-CIUnit::$spyc = &$CI->spyc;
+//$CI->spyc = new Spyc();
+//CIUnit::$spyc = &$CI->spyc;
+CIUnit::$spyc = new Spyc();
 
 require_once('Fixture.php');
 

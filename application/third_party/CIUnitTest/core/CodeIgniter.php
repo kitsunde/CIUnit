@@ -343,17 +343,17 @@
          * ------------------------------------------------------
          */
         $EXT->_call_hook('post_system');
-
-        /*
-         * ------------------------------------------------------
-         *  Close the DB connection if one exists
-         * ------------------------------------------------------
-         */
-        if (class_exists('CI_DB') AND isset($CI->db))
-        {
-            $CI->db->close();
-        }
         
+    }
+    
+    /*
+     * ------------------------------------------------------
+     *  Close the DB connection if one exists
+     * ------------------------------------------------------
+     */
+    if (class_exists('CI_DB') AND isset($CI->db))
+    {
+        $CI->db->close();
     }
 
 /* End of file CodeIgniter.php */

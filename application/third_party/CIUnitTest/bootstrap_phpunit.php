@@ -58,59 +58,12 @@ require_once ('PHPUnit/Autoload.php');
  */
  
  $ciunit_folder = "../application/third_party/CIUnitTest";
-
-/*
- * --------------------------------------------------------------------
- * DEFAULT CONTROLLER
- * --------------------------------------------------------------------
- *
- * Normally you will set your default controller in the routes.php file.
- * You can, however, force a custom routing by hard-coding a
- * specific controller class/function here.  For most applications, you
- * WILL NOT set your routing here, but it's an option for those
- * special instances where you might want to override the standard
- * routing in a specific front controller that shares a common CI installation.
- *
- * IMPORTANT:  If you set the routing here, NO OTHER controller will be
- * callable. In essence, this preference limits your application to ONE
- * specific controller.  Leave the function name blank if you need
- * to call functions dynamically via the URI.
- *
- * Un-comment the $routing array below to use this feature
- *
+ 
+/**
+ * Test Folder
  */
-    // The directory name, relative to the "controllers" folder.  Leave blank
-    // if your controller is not in a sub-folder within the "controllers" folder
-    // $routing['directory'] = '';
-    
-    // The controller class file name.  Example:  Mycontroller.php
-    $routing['controller'] = 'CIU_Controller.php';
-    
-    // The controller function you wish to be called.
-    // $routing['function'] = '';
 
-
-/*
- * -------------------------------------------------------------------
- *  CUSTOM CONFIG VALUES
- * -------------------------------------------------------------------
- *
- * The $assign_to_config array below will be passed dynamically to the
- * config class when initialized. This allows you to set custom config
- * items or override any default config values found in the config.php file.
- * This can be handy as it permits you to share one application between
- * multiple front controller files, with each file containing different
- * config values.
- *
- * Un-comment the $assign_to_config array below to use this feature
- *
- */
-    // This needs to be set before the front controller can set it
-    // since we are extending core files...
-    // @see ./core/common.php
-    //$assign_to_config['ciu_subclass_prefix'] = 'CUI_';
-
-
+$tests_folder = "../tests";
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -172,10 +125,11 @@ require_once ('PHPUnit/Autoload.php');
         define('APPPATH', BASEPATH.$application_folder.'/');
     }
     
-    // Path the CIUnit
+    // The path to CIUnit
     define('CIUPATH', $ciunit_folder . '/');
     
-    
+    // The path to the Tests folder
+    define('TESTSPATH', $tests_folder . '/');
 
 /*
  * --------------------------------------------------------------------
@@ -189,5 +143,5 @@ require_once ('PHPUnit/Autoload.php');
 // Load the CIUnit core
 require_once CIUPATH . 'core/CodeIgniter' . EXT;
 
-//require_once 'PHPUnit/TextUI/TestRunner.php';
+//
 require_once 'CIUnit.php';

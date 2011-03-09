@@ -52,6 +52,20 @@ class Fixture {
         log_message('debug',
             "Data fixture for db table '$table' loaded - $nbr_of_rows rows");
     }
+    
+    public function unload($table)
+    {
+        $this->_assign_db();
+        
+        $Q = $this->CI->db->simple_query('truncate table ' . $table . ';');
+        
+        if (!$Q) {
+            echo $this->CI->db->call_function('error', $this->CI->db->conn_id);
+            echo "\n";
+            echo "Failed to truncate the table ".$table."\n\n";
+        }
+    }
+    
 
     private function _assign_db()
     {

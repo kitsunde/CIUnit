@@ -223,69 +223,8 @@ class CIU_Loader extends MY_Loader {
         $this->_ci_classes[$class] = $classvar;
     }
     
+    // --------------------------------------------------------------------
     
-
-     /**
-     * Database Loader
-     *
-     * @access  public
-     * @param   string  the DB credentials
-     * @param   bool    whether to return the DB object
-     * @param   bool    whether to enable active record (this allows us to override the config setting)
-     * @return  object
-     */
-    function database($params = '', $return = FALSE, $active_record = FALSE)
-    {
-        parent::database($params, $return, $active_record);
-        
-        /*
-        //redesignme, unittest check if there is a DB class already instantiated
-        //reuse it if yes
-        if (isset($this->_ci_db) and !$return){
-            // Grab the super object
-            $CI =& get_instance();
-            $CI->db = $this->_ci_db;
-        }else{
-            // Do we even need to load the database class?
-            if (class_exists('CI_DB') AND $return == FALSE AND $active_record == FALSE)
-            {
-                return FALSE;
-            }
-
-            require_once(BASEPATH.'database/DB'.EXT);
-
-            // Load the DB class
-            $db =& DB($params, $active_record);
-
-            $my_driver = config_item('subclass_prefix').'DB_'.$db->dbdriver.'_driver';
-            $my_driver_file = APPPATH.'libraries/'.$my_driver.EXT;
-
-            if (file_exists($my_driver_file))
-            {
-                require_once($my_driver_file);
-                $db = new $my_driver(get_object_vars($db));
-            }
-
-            if ($return === TRUE)
-            {
-                return $db;
-            }
-            // Grab the super object
-            $CI =& get_instance();
-
-            // Initialize the db variable.  Needed to prevent
-            // reference errors with some configurations
-            $CI->db = '';
-            $CI->db = $db;
-            $this->_ci_db =$CI->db;
-        }
-        // Assign the DB object to any existing models
-        $this->_ci_assign_to_models();
-        */
-    }
-
-        // --------------------------------------------------------------------
-
     /**
      * Autoloader
      *
@@ -302,66 +241,68 @@ class CIU_Loader extends MY_Loader {
         include(APPPATH.'config/autoload'.EXT);
         //include_once(APPPATH.'config/autoload'.EXT);
 
-        if ( ! isset($autoload))
-        {
-            return FALSE;
-        }
+		if ( ! isset($autoload))
+		{
+			return FALSE;
+		}
 
-        // Load any custom config file
-        if (count($autoload['config']) > 0)
-        {
-            $CI =& get_instance();
-            foreach ($autoload['config'] as $key => $val)
-            {
-                $CI->config->load($val);
-            }
-        }
+		// Autoload packages
+		if (isset($autoload['packages']))
+		{
+			foreach ($autoload['packages'] as $package_path)
+			{
+				$this->add_package_path($package_path);
+			}
+		}
 
-        // Autoload plugins, helpers and languages
-        foreach (array('helper', 'plugin', 'language') as $type)
-        {
-            if (isset($autoload[$type]) AND count($autoload[$type]) > 0)
-            {
-                $this->$type($autoload[$type]);
-            }
-        }
+		// Load any custom config file
+		if (count($autoload['config']) > 0)
+		{
+			$CI =& get_instance();
+			foreach ($autoload['config'] as $key => $val)
+			{
+				$CI->config->load($val);
+			}
+		}
 
-        // A little tweak to remain backward compatible
-        // The $autoload['core'] item was deprecated
-        if ( ! isset($autoload['libraries']))
-        {
-            $autoload['libraries'] = $autoload['core'];
-        }
+		// Autoload helpers and languages
+		foreach (array('helper', 'language') as $type)
+		{
+			if (isset($autoload[$type]) AND count($autoload[$type]) > 0)
+			{
+				$this->$type($autoload[$type]);
+			}
+		}
 
-        // Load libraries
-        if (isset($autoload['libraries']) AND count($autoload['libraries']) > 0)
-        {
-            // Load the database driver.
-            if (in_array('database', $autoload['libraries']))
-            {
-                $this->database();
-                $autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
-            }
+		// A little tweak to remain backward compatible
+		// The $autoload['core'] item was deprecated
+		if ( ! isset($autoload['libraries']) AND isset($autoload['core']))
+		{
+			$autoload['libraries'] = $autoload['core'];
+		}
 
-            // Load scaffolding
-            if (in_array('scaffolding', $autoload['libraries']))
-            {
-                $this->scaffolding();
-                $autoload['libraries'] = array_diff($autoload['libraries'], array('scaffolding'));
-            }
+		// Load libraries
+		if (isset($autoload['libraries']) AND count($autoload['libraries']) > 0)
+		{
+			// Load the database driver.
+			if (in_array('database', $autoload['libraries']))
+			{
+				$this->database();
+				$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
+			}
 
-            // Load all other libraries
-            foreach ($autoload['libraries'] as $item)
-            {
-                $this->library($item);
-            }
-        }
+			// Load all other libraries
+			foreach ($autoload['libraries'] as $item)
+			{
+				$this->library($item);
+			}
+		}
 
-        // Autoload models
-        if (isset($autoload['model']))
-        {
-            $this->model($autoload['model']);
-        }
+		// Autoload models
+		if (isset($autoload['model']))
+		{
+			$this->model($autoload['model']);
+		}
 
     }
     
@@ -378,10 +319,7 @@ class CIU_Loader extends MY_Loader {
                 '_ci_return' => $return)
         );
     }
-
-    // --------------------------------------------------------------------
-
-
 }
 
-?>
+/* End of file CIU_Loader.php */
+/* Location ./system/application/third_party/CIUnitTest/core/CIU_Loader.php */

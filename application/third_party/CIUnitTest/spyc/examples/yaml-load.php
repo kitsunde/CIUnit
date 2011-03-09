@@ -11,13 +11,15 @@
 # copyright: (c) 2005-2006 Chris Wanstrath
 #
 
-include('spyc.php');
+include('../spyc.php');
 
-$array = Spyc::YAMLLoad('spyc.yaml');
+$array = Spyc::YAMLLoad('../spyc.yaml');
 
 echo '<pre><a href="spyc.yaml">spyc.yaml</a> loaded into PHP:<br/>';
 print_r($array);
 echo '</pre>';
 
 
-?>
+echo '<pre>YAML Data dumped back:<br/>';
+echo Spyc::YAMLDump($array);
+echo '</pre>';
