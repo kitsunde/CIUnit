@@ -41,7 +41,11 @@ class CIUnit {
 
     public static $spyc;
     public static $fixture;
-
+    
+    /**
+     * If this class is suppose to be a Singleton shouldn't the constructor be private?
+     * Correct me if I am wrong but this doesn't prevent multiple instances of this class.
+     */
     public function __construct()
     {
         self::$instance = &$this;
@@ -66,17 +70,32 @@ class CIUnit {
         }
         
         // the current controller must be archieved before littered
-        $loader = &load_class('Loader', 'core');
+        //$loader = &load_class('Loader', 'core');
         
+        //echo 'Var Dump of self::$controllers -- ';
+        //var_dump(self::$controllers);
+        
+        /*
+        =========================================================
+        I don't understand this section of code.
+        self::$controllers[self::$current] is never set when testing
+        models. Maybe it will be set when testing controllers?
+        =========================================================
         if (isset(self::$controllers[self::$current]))
         {
-            self::$controllers[self::$current]['models'] = $loader->_ci_models;  //this might be an update if it was there before
+            self::$controllers[self::$current]['models'] = $loader->_ci_models;
+            //this might be an update if it was there before
             // FIXME, all additional properties of the loader / controllers
             // that have to be reset must go in some test config file..
             //'components' => $loader->_ci_components,
             //'classes' => $loader->_ci_classes
         }
-            
+        
+        ===================================================
+        I don't understand why this code is clearing out
+        all the loaded components such as autoloaded models
+        -- this is very frustrating
+        ==================================================
         //clean up the current controllers mess
         //reset models
         $loader->_ci_models = array();
@@ -84,6 +103,8 @@ class CIUnit {
         //$loader->_ci_components = array();
         //reset saved queries
         self::$controller->db->queries = array();
+        */
+        
         //clean output / viewvars as well;
         if ( isset(self::$controller->output) )
         {
@@ -127,7 +148,10 @@ class CIUnit {
             self::$controller = &self::$controllers[$controller_name]['address'];                                                   
         }
         
-        //var_dump(self::$controller); die();
+        var_dump(self::$controllers); die();
+        
+        
+        var_dump(self::$controller); die();
         
         //CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         return self::$controller;

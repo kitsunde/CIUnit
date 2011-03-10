@@ -20,12 +20,7 @@
 class CIU_Loader extends MY_Loader {
 
     var $_ci_loaded_files = array();
-
-    function __construct()
-    {
-        parent::__construct();
-    }
-
+    
     /**
      * Load class
      *
@@ -235,6 +230,7 @@ class CIU_Loader extends MY_Loader {
      * @param   array
      * @return  void
      */
+    /*
     function _ci_autoloader()
     {
         //enable multiple autoload during tests
@@ -305,6 +301,7 @@ class CIU_Loader extends MY_Loader {
 		}
 
     }
+    */
     
    /*
     * Can load a view file from an absolute path and

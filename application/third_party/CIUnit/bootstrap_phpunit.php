@@ -1,8 +1,5 @@
 <?php
 
-// Autoload the friggn' thing
-require_once ('PHPUnit/Autoload.php');
-
 /*
  *---------------------------------------------------------------
  * PHP ERROR REPORTING LEVEL
@@ -23,12 +20,13 @@ require_once ('PHPUnit/Autoload.php');
  * This variable must contain the name of your "system" folder.
  * Include the path if the folder is not in the same  directory
  * as this file.
- *
+ * 
+ * NO TRAILING SLASH!
+ * 
+ * The test should be run from inside the tests folder.  The assumption
+ * is that the tests folder is in the same directory path as system.  If
+ * it is not, update the paths appropriately.
  */
-    // The tests should be run from inside the tests folder.
-    // The assumption is that the tests folder is in the same
-    // directory path system.  If it is not, update the paths
-    // appropriately
     $system_path = "../system";
 
 /*
@@ -43,26 +41,35 @@ require_once ('PHPUnit/Autoload.php');
  * http://codeigniter.com/user_guide/general/managing_apps.html
  *
  * NO TRAILING SLASH!
+ * 
+ * The tests should be run from inside the tests folder.  The assumption
+ * is that the tests folder is in the same directory as the application
+ * folder.  If it is not, update the path accordingly.
+ */
+    $application_folder = "../application";
+
+/**
+ * --------------------------------------------------------------
+ * CIUNIT FOLDER NAME
+ * --------------------------------------------------------------
+ * 
+ * Typically this folder will be within the application's third-party
+ * folder.  However, you can place the folder in any directory.  Just
+ * be sure to update this path.
+ *
+ * NO TRAILING SLASH!
  *
  */
-    // The tests should be run from inside the tests folder.
-    // The assumption is that the tests folder is in the same
-    // directory as the application folder.  If it is not, update
-    // the paths appropriately.
-    $application_folder = "../application";
-    
-
-/**
- * CIUnit Folder
- * 
- */
-$ciunit_folder = "../application/third_party/CIUnitTest";
+    $ciunit_folder = "../application/third_party/CIUnit";
  
 /**
- * Test Folder
+ * --------------------------------------------------------------
+ * UNIT TESTS FOLDER NAME
+ * --------------------------------------------------------------
+ *
+ * This is the path to the tests folder.
  */
-
-$tests_folder = "../tests";
+    $tests_folder = "../tests";
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -125,22 +132,35 @@ $tests_folder = "../tests";
     }
     
     // The path to CIUnit
-    define('CIUPATH', $ciunit_folder . '/');
+    if (is_dir($ciunit_folder))
+    {
+        define('CIUPATH', $ciunit_folder . '/');
+    }
+    else
+    {
+        if ( ! is_dir(APPPATH . 'third-party/' . $ciunit_folder))
+        {
+            exit("Your CIUnit folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+        }
+        
+        define ('CIUPATH', APPPATH . 'third-party/' . $ciunit_folder);
+    }
+    
     
     // The path to the Tests folder
     define('TESTSPATH', $tests_folder . '/');
 
 /*
  * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILE
+ * LOAD THE BOOTSTRAP FILES
  * --------------------------------------------------------------------
- *
- * And away we go...
- *
  */
 
-// Load the CIUnit core
+// Load the CIUnit CodeIgniter Core
 require_once CIUPATH . 'core/CodeIgniter' . EXT;
 
-//
+// Autoload the PHPUnit Framework
+require_once ('PHPUnit/Autoload.php');
+
+// Load the CIUnit Framework
 require_once CIUPATH. 'libraries/CIUnit.php';

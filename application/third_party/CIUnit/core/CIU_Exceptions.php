@@ -25,17 +25,7 @@
  * @link		http://codeigniter.com/user_guide/libraries/exceptions.html
  */
 class CIU_Exceptions extends CI_Exceptions {
-
-	/**
-	 * Constructor
-	 */
-	public function __construct()
-	{
-		parent::__construct();
-	}
-
-	// --------------------------------------------------------------------
-
+    
 	/**
 	 * Exception Logger
 	 *
