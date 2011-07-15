@@ -14,9 +14,9 @@
  * created if they didin't exist before
  */
 
-define('CIUnit', '0.17');
+define('CIUnit_Version', '0.17');
 
-require_once (dirname(__FILE__) . '/../application/third_party/CIUnitTest/bootstrap_phpunit.php');
+require_once (dirname(__FILE__) . '/../application/third_party/CIUnit/bootstrap_phpunit.php');
 
 // Set the controller to the default controller.  This allows us access to the
 // CI framework.
@@ -104,9 +104,11 @@ e.g.: 'php generate help migration'
         /**
          * Update this controller to your default controller
          */
-        $this->CI = set_controller('home');
+        $this->CI = set_controller('welcome');
 
         echo "generating...\n";
+        
+        $this->CI->load->database();
         
         $tables = $this->CI->$db->list_tables();
         foreach ($tables as $table)
@@ -122,7 +124,7 @@ e.g.: 'php generate help migration'
               {
                     $h = fopen($fixt_name, 'w') or die("can't open file");
                     //write fixture!
-                    foreach (array('first', 'second', 'third') as $rowname)
+                    foreach (array('1', '2', '3') as $rowname)
                     {
                         fwrite($h, $rowname.":\n");
                         foreach ($fields as $field)

@@ -1,16 +1,18 @@
 <?php
 
-echo 'with php'; die();
+//echo 'with php'; die();
 
-include_once dirname(__FILE__) . '/CIUnit.php';
+define('CIUnit_Version', '0.17');
+
+require_once dirname(__FILE__) . '/../application/third_party/CIUnit/bootstrap_phpunit.php';
 include_once dirname(__FILE__) . '/getops.php';
 
 class Generate
 {
     function __construct()
     {
-        $this->CI = &set_controller('MY_Controller');
-        $this->CI->load->library('Spyc');        
+        $this->CI = &set_controller('CI_Controller');
+        $this->CI->load->database();
     }
 
     function get_table_fields($table)
@@ -94,7 +96,7 @@ class Generate
         $opts = getopts(array(
             'rows'     => array('switch' => 'n', 'type' => GETOPT_VAL, 'default' => 5),
             'fixtures' => array('switch' => 'f', 'type' => GETOPT_MULTIVAL),
-            'output'   => array('switch' => 'o', 'type' => GETOPT_VAL, 'default' => dirname(__FILE__) . '/fixtures')
+            'output'   => array('switch' => 'o', 'type' => GETOPT_VAL, 'default' => '/fixtures')
         ), $args);
         
         
@@ -129,7 +131,7 @@ class Generate
         {
             $filename = $fixture . '_fixt.yml';
             $data = $this->get_table_data($fixture, $rows);
-            $yaml_data = $this->CI->spyc->dump($data);
+            $yaml_data = CIUnit::$spyc->dump($data);
             
             $yaml_data = preg_replace('#^\-\-\-#', '', $yaml_data);
             
