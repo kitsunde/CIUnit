@@ -39,7 +39,6 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
         
         $this->CI->load->model('phone_carrier_model');
         $this->_pcm = $this->CI->phone_carrier_model;
-        $this->dbfixt(array('phone_carrier' => 'phone_carrier'));
     }
     
     public function tearDown()
