@@ -14,8 +14,6 @@
  * created if they didin't exist before
  */
 
-define('CIUnit_Version', '0.17');
-
 require_once (dirname(__FILE__) . '/../application/third_party/CIUnit/bootstrap_phpunit.php');
 
 // Set the controller to the default controller.  This allows us access to the

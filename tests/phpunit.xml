@@ -5,7 +5,6 @@
     stopOnFailure="false" 
     bootstrap="../application/third_party/CIUnit/bootstrap_phpunit.php">
     <php>
-        <const name="CIUnit_Version" value="0.17"/>
         <server name="SERVER_NAME" value="http://example.com" />
     </php>
     <testsuites>

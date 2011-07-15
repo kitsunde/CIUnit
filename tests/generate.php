@@ -2,8 +2,6 @@
 
 //echo 'with php'; die();
 
-define('CIUnit_Version', '0.17');
-
 require_once dirname(__FILE__) . '/../application/third_party/CIUnit/bootstrap_phpunit.php';
 include_once dirname(__FILE__) . '/getops.php';
 
