@@ -109,11 +109,19 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      * dbfixt can have multiple strings as arguments, like so:
      * $this->dbfixt('users', 'items', 'prices');
      */
-    protected function dbfixt(array $table_fixtures)
+    protected function dbfixt($table_fixtures)
     {
         $this->CI->db = $this->CI->config->item('db');
         
-        $this->load_fixt($table_fixtures);
+        if (is_array($table_fixtures))
+        {
+            $this->load_fixt($table_fixtures);
+        }
+        else
+        {
+            $table_fixtures = func_get_args();
+            $this->load_fixt($table_fixtures);
+        }
         
         /**
          * This is to allow the Unit Tester to specifiy different fixutre files for
