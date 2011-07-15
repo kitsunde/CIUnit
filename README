@@ -5,16 +5,34 @@ CIUnit Foostack
 	- Grzegorz "Grisha" Godlewski
 
 Notes:
-    - CIUnit was updated to work completely with CodeIgniter 1.7.2
+    - CIUnit was updated to work completely with CodeIgniter 2.0
     - CIUnit is completely separated from the CodeIgniter Core Files.
         > CIUnit has it's own modified core files and will load them only
           when needed (by using the console for instance).
         > CIUnit won't use the system index.php anymore, instead it'll use
-          libraries/fooStack/fooBase/index.php
+          application/third_party/CIUnit/bootstrap_phpunit.php
 
           This is to prevent CIUnit/Foostack to cause any extra load on
           production.          
 
           Folder structure:
-              - libraries/fooStack/fooBase/index.php (Application and System Folder)
-              - tests/settings.php (Optional: only edit if you want to move index.php)
+              - application/third_party/CIUnit/bootstrap_phpunit.php (Application and System Folder)
+              - tests/phpunit.xml (Optional: only edit if you want to move bootstrap_phpunit.php)
+
+How to Use:
+	Install:
+		$ cp -R ciunit/application [CI2 Project Path]/
+		$ cp -R ciunit/tests [CI2 Project Path]/
+		
+	Run Tests:
+		All Tests:
+			$ cd [CI2 Project Path]/tests
+			$ phpunit
+			
+		Some Tests:
+			$ cd [CI2 Project Path]/tests
+			$ phpunit models
+			
+		Single Test:
+			$ cd [CI2 Project Path]/tests
+			$ phpunit models/PhoneCarrierModelTest.php
