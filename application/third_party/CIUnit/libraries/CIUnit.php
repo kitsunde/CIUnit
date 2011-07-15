@@ -148,10 +148,10 @@ class CIUnit {
             self::$controller = &self::$controllers[$controller_name]['address'];                                                   
         }
         
-        var_dump(self::$controllers); die();
+//        var_dump(self::$controllers); die();
         
         
-        var_dump(self::$controller); die();
+//        var_dump(self::$controller); die();
         
         //CI_Base::$instance = &self::$controller; //so get_instance() provides the correct controller
         return self::$controller;

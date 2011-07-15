@@ -17,7 +17,7 @@
  * MY_Loader.
  * ============================================================================
  */
-class CIU_Loader extends MY_Loader {
+class CIU_Loader extends CI_Loader {
 
     var $_ci_loaded_files = array();
     

@@ -29,7 +29,7 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
         
         $this->CI->load->model('Product_model', 'pm');
         $this->pm=$this->CI->pm;
-        $this->dbfixt('users', 'products')
+        $this->dbfixt('users', 'products');
         
         the fixtures are now available in the database and so:
         $this->users_fixt;
@@ -37,8 +37,9 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
         
         */
         
-        $this->CI->load->model('Phone_Carrier_Model');
-        $this->_pcm = $this->CI->Phone_Carrier_Model;
+        $this->CI->load->model('phone_carrier_model');
+        $this->_pcm = $this->CI->phone_carrier_model;
+        $this->dbfixt(array('phone_carrier' => 'phone_carrier'));
     }
     
     public function tearDown()

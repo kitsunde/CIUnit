@@ -16,7 +16,7 @@ class Fixture {
     function __construct()
     {
         //security measure 1: only load if CIUnit is loaded
-        if (! defined('CIUnit') )
+        if (! defined('CIUnit_Version') )
         {
             exit('can\'t load fixture library class when not in test mode!');
         }

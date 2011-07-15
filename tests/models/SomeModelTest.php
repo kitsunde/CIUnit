@@ -7,9 +7,9 @@
 class SomeModelTest extends CIUnit_TestCase
 {
     protected $tables = array(
-        'group'         => 'group_fixt',
-        'user'          => 'user_fixt',
-        'user_group'    => 'user_group_fixt'
+        //'group'         => 'group_fixt',
+        //'user'          => 'user_fixt',
+        //'user_group'    => 'user_group_fixt'
     );
     
     public function __contruct($name = NULL, array $data = array(), $dataName = '')

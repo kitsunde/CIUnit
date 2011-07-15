@@ -163,9 +163,7 @@
  * ------------------------------------------------------
  */
     $RTR =& load_class('Router', 'core');
-    $GLOBALS['URI'] =& $RTR;
-    
-    $RTR->_set_routing();
+    $GLOBALS['RTR'] =& $RTR;
     
     // Set any routing overrides that may exist in the main index file
     if (isset($routing))
@@ -231,7 +229,7 @@
         require APPPATH.'core/'.$CFG->config['subclass_prefix'].'Controller'.EXT;
     }
     
-    if (defined('CIUnit') === false) {
+    if (defined('CIUnit_Version') === false) {
         
         // Load the local application controller
         // Note: The Router class automatically validates the controller path using the router->_validate_request().

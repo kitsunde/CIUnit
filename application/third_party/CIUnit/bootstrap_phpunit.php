@@ -1,5 +1,9 @@
 <?php
 
+if ( ! defined('CIUnit_Version') ) {
+	define('CIUnit_Version', 0.17);
+}
+
 /*
  *---------------------------------------------------------------
  * PHP ERROR REPORTING LEVEL
@@ -27,7 +31,7 @@
  * is that the tests folder is in the same directory path as system.  If
  * it is not, update the paths appropriately.
  */
-    $system_path = "../system";
+    $system_path = dirname(__FILE__) . "/../../../system";
 
 /*
  *---------------------------------------------------------------
@@ -46,7 +50,7 @@
  * is that the tests folder is in the same directory as the application
  * folder.  If it is not, update the path accordingly.
  */
-    $application_folder = "../application";
+    $application_folder = dirname(__FILE__) . "/../..";
 
 /**
  * --------------------------------------------------------------
@@ -60,7 +64,7 @@
  * NO TRAILING SLASH!
  *
  */
-    $ciunit_folder = "../application/third_party/CIUnit";
+    $ciunit_folder = dirname(__FILE__);
  
 /**
  * --------------------------------------------------------------
@@ -69,7 +73,7 @@
  *
  * This is the path to the tests folder.
  */
-    $tests_folder = "../tests";
+    $tests_folder = dirname(__FILE__) . "/../../../tests";
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -138,12 +142,12 @@
     }
     else
     {
-        if ( ! is_dir(APPPATH . 'third-party/' . $ciunit_folder))
+        if ( ! is_dir(APPPATH . 'third_party/' . $ciunit_folder))
         {
             exit("Your CIUnit folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
         }
         
-        define ('CIUPATH', APPPATH . 'third-party/' . $ciunit_folder);
+        define ('CIUPATH', APPPATH . 'third_party/' . $ciunit_folder);
     }
     
     
