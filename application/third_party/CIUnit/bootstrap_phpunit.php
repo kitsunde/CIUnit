@@ -1,9 +1,5 @@
 <?php
 
-if ( ! defined('CIUnit_Version') ) {
-	define('CIUnit_Version', 0.17);
-}
-
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT
