@@ -22,10 +22,10 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      *
      * For example:
      * $tables = array(
-     *      'group' => 'group_fixt,
-     *      'user' => 'user_fixt',
-     *      'user_group' => 'user_group_fixt'
-     *      'table_a' => 'table_a_01_fixt'
+     *      'group' => 'group,
+     *      'user' => 'user',
+     *      'user_group' => 'user_group'
+     *      'table_a' => 'table_a_01'
      * );
      *
      * Note: To test different data scenarios for a single database, create
@@ -33,7 +33,7 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      *
      * For example:
      * $tables = array(
-     *      'table_a' => 'table_a_02_fixt'
+     *      'table_a' => 'table_a_02'
      * );
      *
      * @var array
