@@ -22,7 +22,7 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
      *
      * For example:
      * $tables = array(
-     *      'group' => 'group,
+     *      'group' => 'group',
      *      'user' => 'user',
      *      'user_group' => 'user_group'
      *      'table_a' => 'table_a_01'
