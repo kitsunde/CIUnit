@@ -19,7 +19,6 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
     
     public function setUp()
     {
-        $this->tearDown();
         parent::setUp();
         
         /*
@@ -49,7 +48,7 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
     // ------------------------------------------------------------------------
     
     /**
-     * @dataProvider testGetCarriersData
+     * @dataProvider GetCarriersProvider
      */
     public function testGetCarriers(array $attributes, $expected)
     {
@@ -58,7 +57,7 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
         $this->assertEquals($expected, count($actual));
     }
     
-    public function testGetCarriersData()
+    public function GetCarriersProvider()
     {
         return array(
             array(array('name'), 5)
