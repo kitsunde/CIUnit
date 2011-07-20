@@ -220,22 +220,29 @@ class CIU_Loader extends CI_Loader {
     
     // --------------------------------------------------------------------
     
-    /**
-     * Autoloader
-     *
-     * The config/autoload.php file contains an array that permits sub-systems,
-     * libraries, plugins, and helpers to be loaded automatically.
-     *
-     * @access  private
-     * @param   array
-     * @return  void
-     */
-    /*
-    function _ci_autoloader()
-    {
-        //enable multiple autoload during tests
-        include(APPPATH.'config/autoload'.EXT);
-        //include_once(APPPATH.'config/autoload'.EXT);
+	/**
+	 * Autoloader
+	 *
+	 * The config/autoload.php file contains an array that permits sub-systems,
+	 * libraries, and helpers to be loaded automatically.
+	 *
+	 * This function is public, as it's used in the CI_Controller class.
+	 * However, there is no reason you should ever needs to use it.
+	 *
+	 * @param	array
+	 * @return	void
+	 */
+	public function ci_autoloader()
+	{
+		if (defined('ENVIRONMENT') AND file_exists(APPPATH.'config/'.ENVIRONMENT.'/autoload.php'))
+		{
+			include(APPPATH.'config/'.ENVIRONMENT.'/autoload.php');
+		}
+		else
+		{
+			include(APPPATH.'config/autoload.php');
+		}
+
 
 		if ( ! isset($autoload))
 		{
@@ -299,9 +306,7 @@ class CIU_Loader extends CI_Loader {
 		{
 			$this->model($autoload['model']);
 		}
-
-    }
-    */
+	}
     
    /*
     * Can load a view file from an absolute path and
@@ -316,6 +321,11 @@ class CIU_Loader extends CI_Loader {
                 '_ci_return' => $return)
         );
     }
+
+	function reset_ci_models()
+	{
+		$this->_ci_models = array();
+	}
 }
 
 /* End of file CIU_Loader.php */

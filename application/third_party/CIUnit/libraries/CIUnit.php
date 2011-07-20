@@ -70,7 +70,8 @@ class CIUnit {
         }
         
         // the current controller must be archieved before littered
-        //$loader = &load_class('Loader', 'core');
+        $loader =& load_class('Loader', 'core');
+        $loader->reset_ci_models();
         
         //echo 'Var Dump of self::$controllers -- ';
         //var_dump(self::$controllers);
@@ -119,7 +120,7 @@ class CIUnit {
             $old = &self::$controllers[$controller_name];
             self::$controller = &$old['address'];
             self::$current = $controller_name;
-            $loader->_ci_models = $old['models'];
+            //$loader->_ci_models = $old['models'];
             //$loader->_ci_components = $old['components'];
             //$loader->_ci_classes = &$old['classes'];
         }
@@ -139,7 +140,7 @@ class CIUnit {
                 }
             }
             
-            self::$current = new $controller_name;
+            self::$current = $controller_name;
             
             self::$controllers[$controller_name] = Array(
                                                    'address' => new $controller_name(),

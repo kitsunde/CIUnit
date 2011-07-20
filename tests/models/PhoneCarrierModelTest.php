@@ -36,8 +36,8 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
         
         */
         
-        $this->CI->load->model('phone_carrier_model');
-        $this->_pcm = $this->CI->phone_carrier_model;
+        $this->CI->load->model('Phone_carrier_model');
+        $this->_pcm = $this->CI->Phone_carrier_model;
     }
     
     public function tearDown()
