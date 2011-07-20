@@ -236,10 +236,12 @@ class CIU_Loader extends CI_Loader {
 	{
 		if (defined('ENVIRONMENT') AND file_exists(APPPATH.'config/'.ENVIRONMENT.'/autoload.php'))
 		{
+			// enable multiple autoload during tests
 			include(APPPATH.'config/'.ENVIRONMENT.'/autoload.php');
 		}
 		else
 		{
+			// enable multiple autoload during tests
 			include(APPPATH.'config/autoload.php');
 		}
 
