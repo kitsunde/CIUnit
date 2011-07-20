@@ -12,7 +12,7 @@ class SomeModelTest extends CIUnit_TestCase
         //'user_group'    => 'user_group'
     );
     
-    public function __contruct($name = NULL, array $data = array(), $dataName = '')
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
     }

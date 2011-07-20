@@ -12,7 +12,7 @@ class PhoneCarrierModelTest extends CIUnit_TestCase
     
     private $_pcm;
     
-    public function __contruct($name = NULL, array $data = array(), $dataName = '')
+    public function __construct($name = NULL, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
     }
