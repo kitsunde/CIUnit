@@ -198,3 +198,6 @@ require_once ('PHPUnit/Autoload.php');
 
 // Load the CIUnit Framework
 require_once CIUPATH. 'libraries/CIUnit.php';
+
+/* End of file bootstrap_phpunit.php */
+/* Location ./application/third_party/CIUnit/bootstrap_phpunit.php */
