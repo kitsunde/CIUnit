@@ -71,7 +71,9 @@ class CIUnit {
         
         // the current controller must be archieved before littered
         $loader =& load_class('Loader', 'core');
-        $loader->reset_ci_models();
+
+        // reset all loaded data
+        $loader->reset();
         
         //echo 'Var Dump of self::$controllers -- ';
         //var_dump(self::$controllers);

@@ -324,9 +324,13 @@ class CIU_Loader extends CI_Loader {
         );
     }
 
-	function reset_ci_models()
+	function reset()
 	{
+		$this->_ci_cached_vars = array();
+		$this->_ci_classes = array();
+		$this->_ci_loaded_files = array();
 		$this->_ci_models = array();
+		$this->_ci_helpers = array();
 	}
 }
 
