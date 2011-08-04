@@ -44,7 +44,7 @@ exit;
  * For more info visit:  http://www.php.net/error_reporting
  *
  */
-    error_reporting(E_ALL);
+	error_reporting(E_ALL);
 
 /*
  *---------------------------------------------------------------
@@ -61,7 +61,7 @@ exit;
  * is that the tests folder is in the same directory path as system.  If
  * it is not, update the paths appropriately.
  */
-    $system_path = dirname(__FILE__) . "/../../../system";
+	$system_path = dirname(__FILE__) . "/../../../system";
 
 /*
  *---------------------------------------------------------------
@@ -80,7 +80,7 @@ exit;
  * is that the tests folder is in the same directory as the application
  * folder.  If it is not, update the path accordingly.
  */
-    $application_folder = dirname(__FILE__) . "/../..";
+	$application_folder = dirname(__FILE__) . "/../..";
 
 /**
  * --------------------------------------------------------------
@@ -94,8 +94,8 @@ exit;
  * NO TRAILING SLASH!
  *
  */
-    $ciunit_folder = dirname(__FILE__);
- 
+	$ciunit_folder = dirname(__FILE__);
+
 /**
  * --------------------------------------------------------------
  * UNIT TESTS FOLDER NAME
@@ -103,7 +103,7 @@ exit;
  *
  * This is the path to the tests folder.
  */
-    $tests_folder = dirname(__FILE__) . "/../../../tests";
+	$tests_folder = dirname(__FILE__) . "/../../../tests";
 
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
@@ -115,74 +115,74 @@ exit;
  *  Resolve the system path for increased reliability
  * ---------------------------------------------------------------
  */
-    if (realpath($system_path) !== FALSE)
-    {
-        $system_path = realpath($system_path).'/';
-    }
+	if (realpath($system_path) !== FALSE)
+	{
+		$system_path = realpath($system_path).'/';
+	}
 
-    // ensure there's a trailing slash
-    $system_path = rtrim($system_path, '/').'/';
-    
-    // Is the system path correct?
-    if ( ! is_dir($system_path))
-    {
-        exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
-    }
+	// ensure there's a trailing slash
+	$system_path = rtrim($system_path, '/').'/';
+	
+	// Is the system path correct?
+	if ( ! is_dir($system_path))
+	{
+		exit("Your system folder path does not appear to be set correctly. Please open the following file and correct this: ".pathinfo(__FILE__, PATHINFO_BASENAME));
+	}
 
 /*
  * -------------------------------------------------------------------
  *  Now that we know the path, set the main path constants
  * -------------------------------------------------------------------
  */
-    // The name of THIS file
-    define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
+	// The name of THIS file
+	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-    // The PHP file extension
-    define('EXT', '.php');
+	// The PHP file extension
+	define('EXT', '.php');
 
-    // Path to the system folder
-    define('BASEPATH', str_replace("\\", "/", $system_path));
+	// Path to the system folder
+	define('BASEPATH', str_replace("\\", "/", $system_path));
 
-    // Path to the front controller (this file)
-    define('FCPATH', str_replace(SELF, '', __FILE__));
+	// Path to the front controller (this file)
+	define('FCPATH', str_replace(SELF, '', __FILE__));
 
-    // Name of the "system folder"
-    define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
+	// Name of the "system folder"
+	define('SYSDIR', trim(strrchr(trim(BASEPATH, '/'), '/'), '/'));
 
 
-    // The path to the "application" folder
-    if (is_dir($application_folder))
-    {
-        define('APPPATH', $application_folder.'/');
-    }
-    else
-    {
-        if ( ! is_dir(BASEPATH.$application_folder.'/'))
-        {
-            exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
-        }
+	// The path to the "application" folder
+	if (is_dir($application_folder))
+	{
+		define('APPPATH', $application_folder.'/');
+	}
+	else
+	{
+		if ( ! is_dir(BASEPATH.$application_folder.'/'))
+		{
+			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
 
-        define('APPPATH', BASEPATH.$application_folder.'/');
-    }
-    
-    // The path to CIUnit
-    if (is_dir($ciunit_folder))
-    {
-        define('CIUPATH', $ciunit_folder . '/');
-    }
-    else
-    {
-        if ( ! is_dir(APPPATH . 'third_party/' . $ciunit_folder))
-        {
-            exit("Your CIUnit folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
-        }
-        
-        define ('CIUPATH', APPPATH . 'third_party/' . $ciunit_folder);
-    }
-    
-    
-    // The path to the Tests folder
-    define('TESTSPATH', $tests_folder . '/');
+		define('APPPATH', BASEPATH.$application_folder.'/');
+	}
+	
+	// The path to CIUnit
+	if (is_dir($ciunit_folder))
+	{
+		define('CIUPATH', $ciunit_folder . '/');
+	}
+	else
+	{
+		if ( ! is_dir(APPPATH . 'third_party/' . $ciunit_folder))
+		{
+			exit("Your CIUnit folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+		
+		define ('CIUPATH', APPPATH . 'third_party/' . $ciunit_folder);
+	}
+	
+	
+	// The path to the Tests folder
+	define('TESTSPATH', $tests_folder . '/');
 
 /*
  * --------------------------------------------------------------------

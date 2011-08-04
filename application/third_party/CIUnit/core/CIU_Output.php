@@ -20,100 +20,104 @@
 
 class CIU_Output extends CI_Output {
 
-    function __construct()
-    {
-        parent::__construct();
-        $this->final_output = ''; //would be just set to 'null' in CI_Output
-        $this->_ci_ob_level  = ob_get_level();
-        $this->cookies = array();
-    }
+	function __construct()
+	{
+		parent::__construct();
+		$this->final_output = ''; //would be just set to 'null' in CI_Output
+		$this->_ci_ob_level  = ob_get_level();
+		$this->cookies = array();
+	}
 
-    /**
-    * store cookie headers
-    */
-    function set_cookie($arr){
-        if(!is_array($arr)){
-            $arr = func_get_args();
-        }
-        $this->cookies[]=$arr;
-    }
+	/**
+	* store cookie headers
+	*/
+	function set_cookie($arr){
+		if(!is_array($arr)){
+			$arr = func_get_args();
+		}
+		$this->cookies[]=$arr;
+	}
 
-    /**
-    * Add to instead of replace final output
-    */
-    function add_output($str){
-        $this->final_output.=$str;
-    }
+	/**
+	* Add to instead of replace final output
+	*/
+	function add_output($str){
+		$this->final_output.=$str;
+	}
 
-    /**
-    * Pop Output
-    *
-    * The final output the output class has stringed together is returned and truncated
-    *
-    */
-    function pop_output(){
-        $output = $this->final_output;
-        $this->final_output = "";
-        return $output;
-    }
+	/**
+	* Pop Output
+	*
+	* The final output the output class has stringed together is returned and truncated
+	*
+	*/
+	function pop_output(){
+		$output = $this->final_output;
+		$this->final_output = "";
+		return $output;
+	}
 
-  /**
-  * set_no_cache_headers
-  * called as a post controller construction hook
-  * should count therefore as controller duty
-  */
-  function set_no_cache_headers(){
-    //somehow $this can't be used as headers are not set in that case
-    $CI = &get_instance();
-    $CI->output->soft_set_header('Content-type: text/html; charset=utf-8');
-    $CI->output->soft_set_header('Cache-Control: no-cache');
-    log_message('debug', 'no cache headers set in output class');
-  }
+	/**
+	* set_no_cache_headers
+	* called as a post controller construction hook
+	* should count therefore as controller duty
+	*/
+	function set_no_cache_headers(){
+	//somehow $this can't be used as headers are not set in that case
+	$CI = &get_instance();
+	$CI->output->soft_set_header('Content-type: text/html; charset=utf-8');
+	$CI->output->soft_set_header('Cache-Control: no-cache');
+	log_message('debug', 'no cache headers set in output class');
+	}
 
-  	// --------------------------------------------------------------------
+	// --------------------------------------------------------------------
 
 	/**
 	 * sets headers if not already set
 	 */
 	function soft_set_header($header)
 	{
-        $key = strtolower(array_shift(split(':', $header)));
-        $add = true;
-        foreach($this->headers as $hdr){
-            $h = split(':', $hdr);
-            if(strtolower(array_shift($h)) == $key){
-                $add = false;
-            }
-        }
-        $add?($this->headers[] = $header):'';
+		$key = strtolower(array_shift(split(':', $header)));
+		$add = true;
+		foreach($this->headers as $hdr){
+			$h = split(':', $hdr);
+			if(strtolower(array_shift($h)) == $key){
+				$add = false;
+			}
+		}
+		$add?($this->headers[] = $header):'';
 	}
 
-  /**
-  * say
-  * like normal echo but puts it in the output_buffer first, so we still can set headers
-  * and post process it
-  */
-  function say($str){
-    ob_start();
-        echo $str;
-    $this->ob_flush_clean();
+	/**
+	* say
+	* like normal echo but puts it in the output_buffer first, so we still can set headers
+	* and post process it
+	*/
+	function say($str){
+	ob_start();
+		echo $str;
+	$this->ob_flush_clean();
   }
 
-  /**
-  * ob_flush_clean
-  * flushes or cleans the buffer depending on if we are finished outputting or still on a nested level
-  */
-  function ob_flush_clean(){
-      $CI = &get_instance();
-      if (ob_get_level() > $this->_ci_ob_level + 1){
-            ob_end_flush();
-      }else{
-         $this->add_output(ob_get_contents());
-         @ob_end_clean();
-      }
-  }
+	/**
+	* ob_flush_clean
+	* flushes or cleans the buffer depending on if we are finished outputting or still on a nested level
+	*/
+	function ob_flush_clean()
+	{
+		$CI =& get_instance();
+		if (ob_get_level() > $this->_ci_ob_level + 1)
+		{
+			ob_end_flush();
+		}
+		else
+		{
+			$this->add_output(ob_get_contents());
+			@ob_end_clean();
+		}
+	}
 
-  /**
+	/**
 	 * Display Output
 	 *
 	 * All "view" data is automatically put into this variable by the controller class:
@@ -183,19 +187,19 @@ class CIU_Output extends CI_Output {
 			foreach ($this->headers as $header)
 			{
 				@header($header);
-                log_message('debug', "header '$header' set.");
+				log_message('debug', "header '$header' set.");
 			}
 		}
 
-        // --------------------------------------------------------------------
+		// --------------------------------------------------------------------
 
 		// Are there any cookies to set?
 		if (count($this->cookies) > 0)
 		{
 			foreach ($this->cookies as $cookie)
 			{
-                call_user_func_array ( 'setcookie' , $cookie );
-                log_message('debug', "cookie '".join(', ', $cookie)."' set.");
+				call_user_func_array ( 'setcookie' , $cookie );
+				log_message('debug', "cookie '".join(', ', $cookie)."' set.");
 			}
 		}
 
@@ -258,4 +262,5 @@ class CIU_Output extends CI_Output {
 	// --------------------------------------------------------------------
 }
 
-?>
+/* End of file CIU_Output.php */
+/* Location: ./system/application/third_party/CIUnitTest/core/CIU_Output.php */
