@@ -263,4 +263,4 @@ class CIU_Output extends CI_Output {
 }
 
 /* End of file CIU_Output.php */
-/* Location: ./system/application/third_party/CIUnitTest/core/CIU_Output.php */
+/* Location: ./application/third_party/CIUnit/core/CIU_Output.php */

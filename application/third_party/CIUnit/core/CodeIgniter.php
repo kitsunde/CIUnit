@@ -395,4 +395,4 @@ if (defined('CIUnit_Version') === FALSE)
 
 
 /* End of file CodeIgniter.php */
-/* Location: ./system/application/third_party/CIUnitTest/core/CodeIgniter.php */
+/* Location: ./application/third_party/CIUnit/core/CodeIgniter.php */

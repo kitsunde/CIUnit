@@ -133,4 +133,4 @@ class CIU_Exceptions extends CI_Exceptions {
 
 }
 /* End of file CIU_Exceptions.php */
-/* Location ./system/application/third_party/CIUnitTest/core/CIU_Exceptions.php */
+/* Location ./application/third_party/CIUnit/core/CIU_Exceptions.php */
