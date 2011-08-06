@@ -31,18 +31,21 @@ class CIU_Output extends CI_Output {
 	/**
 	* store cookie headers
 	*/
-	function set_cookie($arr){
-		if(!is_array($arr)){
+	function set_cookie($arr)
+	{
+		if ( ! is_array($arr))
+		{
 			$arr = func_get_args();
 		}
-		$this->cookies[]=$arr;
+		$this->cookies[] = $arr;
 	}
 
 	/**
 	* Add to instead of replace final output
 	*/
-	function add_output($str){
-		$this->final_output.=$str;
+	function add_output($str)
+	{
+		$this->final_output .= $str;
 	}
 
 	/**
@@ -51,7 +54,8 @@ class CIU_Output extends CI_Output {
 	* The final output the output class has stringed together is returned and truncated
 	*
 	*/
-	function pop_output(){
+	function pop_output()
+	{
 		$output = $this->final_output;
 		$this->final_output = "";
 		return $output;
@@ -62,12 +66,13 @@ class CIU_Output extends CI_Output {
 	* called as a post controller construction hook
 	* should count therefore as controller duty
 	*/
-	function set_no_cache_headers(){
-	//somehow $this can't be used as headers are not set in that case
-	$CI = &get_instance();
-	$CI->output->soft_set_header('Content-type: text/html; charset=utf-8');
-	$CI->output->soft_set_header('Cache-Control: no-cache');
-	log_message('debug', 'no cache headers set in output class');
+	function set_no_cache_headers()
+	{
+		//somehow $this can't be used as headers are not set in that case
+		$CI =& get_instance();
+		$CI->output->soft_set_header('Content-type: text/html; charset=utf-8');
+		$CI->output->soft_set_header('Cache-Control: no-cache');
+		log_message('debug', 'no cache headers set in output class');
 	}
 
 	// --------------------------------------------------------------------
@@ -79,13 +84,15 @@ class CIU_Output extends CI_Output {
 	{
 		$key = strtolower(array_shift(split(':', $header)));
 		$add = true;
-		foreach($this->headers as $hdr){
+		foreach($this->headers as $hdr)
+		{
 			$h = split(':', $hdr);
-			if(strtolower(array_shift($h)) == $key){
+			if(strtolower(array_shift($h)) == $key)
+			{
 				$add = false;
 			}
 		}
-		$add?($this->headers[] = $header):'';
+		$add ? ($this->headers[] = $header) : '';
 	}
 
 	/**
@@ -93,11 +100,12 @@ class CIU_Output extends CI_Output {
 	* like normal echo but puts it in the output_buffer first, so we still can set headers
 	* and post process it
 	*/
-	function say($str){
-	ob_start();
+	function say($str)
+	{
+		ob_start();
 		echo $str;
-	$this->ob_flush_clean();
-  }
+		$this->ob_flush_clean();
+	}
 
 	/**
 	* ob_flush_clean
