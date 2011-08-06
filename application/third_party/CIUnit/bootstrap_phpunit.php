@@ -199,5 +199,17 @@ require_once ('PHPUnit/Autoload.php');
 // Load the CIUnit Framework
 require_once CIUPATH. 'libraries/CIUnit.php';
 
+//=== and off we go ===
+$CI =& set_controller('CIU_Controller', CIUPATH . 'core/');
+
+require_once(CIUPATH . 'libraries/spyc/spyc.php');
+
+CIUnit::$spyc = new Spyc();
+
+require_once(CIUPATH . 'libraries/Fixture.php');
+
+$CI->fixture = new Fixture();
+CIUnit::$fixture =& $CI->fixture;
+
 /* End of file bootstrap_phpunit.php */
 /* Location ./application/third_party/CIUnit/bootstrap_phpunit.php */
