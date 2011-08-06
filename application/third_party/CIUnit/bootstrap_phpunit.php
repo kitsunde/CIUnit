@@ -212,4 +212,4 @@ $CI->fixture = new Fixture();
 CIUnit::$fixture =& $CI->fixture;
 
 /* End of file bootstrap_phpunit.php */
-/* Location ./application/third_party/CIUnit/bootstrap_phpunit.php */
+/* Location: ./application/third_party/CIUnit/bootstrap_phpunit.php */

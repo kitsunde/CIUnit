@@ -223,4 +223,4 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
 }
 
 /* End of file CIUnitTestCase.php */
-/* Location ./application/third_party/CIUnit/libraries/CIUnitTestCase.php */
+/* Location: ./application/third_party/CIUnit/libraries/CIUnitTestCase.php */

@@ -14,4 +14,4 @@ class CIU_Controller extends CI_Controller {
 }
 
 /* End of file CIU_Controller.php */
-/* Location ./application/third_party/CIUnit/core/CIU_Controller.php */
+/* Location: ./application/third_party/CIUnit/core/CIU_Controller.php */
