@@ -7,7 +7,10 @@ CIUnit Foostack
 	- Kenji "kenjis" Suzuki
 
 Notes:
-    - CIUnit was updated to work completely with CodeIgniter 2.0
+    - CIUnit was updated to work completely with CodeIgniter 2.0.3.
+    	CodeIgniter 2.0.3 is not yet released.
+    	See also: https://bitbucket.org/kenjis/my-ciunit/wiki/Home
+    	
     - CIUnit is completely separated from the CodeIgniter Core Files.
         > CIUnit has it's own modified core files and will load them only
           when needed (by using the console for instance).
@@ -15,7 +18,7 @@ Notes:
           application/third_party/CIUnit/bootstrap_phpunit.php
 
           This is to prevent CIUnit/Foostack to cause any extra load on
-          production.          
+          production.
 
           Folder structure:
               - application/third_party/CIUnit/bootstrap_phpunit.php (Application and System Folder)
