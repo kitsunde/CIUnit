@@ -8,7 +8,6 @@ CIUnit Foostack
 
 Notes:
     - CIUnit was updated to work completely with CodeIgniter 2.0.3.
-    	CodeIgniter 2.0.3 is not yet released.
     	See also: https://bitbucket.org/kenjis/my-ciunit/wiki/Home
     	
     - CIUnit is completely separated from the CodeIgniter Core Files.
@@ -41,3 +40,30 @@ How to Use:
 		Single Test:
 			$ cd [CI2 Project Path]/tests
 			$ phpunit models/PhoneCarrierModelTest.php
+
+Execute Tests of CodeIgniter Unit Testing Class:
+	Limitation:
+		You must execute all tests in index() function of testing controllers.
+		
+		Example:
+			function index()
+			{
+				$this->test_no_additional_headers();
+				$this->test_x_forwarded_for();
+				$this->test_client_ip();
+				$this->test_x_forwarded_for_and_client_ip();
+				
+				echo $this->unit->report();
+			}
+		
+	See tests/controllers/CI_Unit_Test_class_Test.php.
+	In test_CI_Unit_Test_Class() function, set the folder where testing controllers are in.
+
+		$test_path = APPPATH . 'controllers';
+		$test_folder = 'tests';
+	
+	It runs all *.php files in "application/controllers/tests" folder.
+	
+	PHPUnit shows all test file names and failed test names.
+	If more than one test fails, PHPUnit reports 1 failure, even if 100 fails occurres.
+	
