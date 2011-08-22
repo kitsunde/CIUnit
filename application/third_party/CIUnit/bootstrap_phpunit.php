@@ -25,26 +25,24 @@ exit;
  *
  * This can be set to anything, but default usage is:
  *
- *   development
- *   testing
- *   production
+ *     development
+ *     testing
+ *     production
  *
  * NOTE: If you change these, also change the error_reporting() code below
  *
  */
 	define('ENVIRONMENT', 'testing');
-
 /*
  *---------------------------------------------------------------
- * PHP ERROR REPORTING LEVEL
+ * ERROR REPORTING
  *---------------------------------------------------------------
  *
- * By default CI runs with error reporting set to ALL.  For security
- * reasons you are encouraged to change this to 0 when your site goes live.
- * For more info visit:  http://www.php.net/error_reporting
+ * By default CI runs with error reporting set to -1.
  *
  */
-	error_reporting(E_ALL);
+
+	error_reporting(-1);
 
 /*
  *---------------------------------------------------------------
@@ -61,7 +59,7 @@ exit;
  * is that the tests folder is in the same directory path as system.  If
  * it is not, update the paths appropriately.
  */
-	$system_path = dirname(__FILE__) . "/../../../system";
+	$system_path = dirname(__FILE__) . '/../../../system';
 
 /*
  *---------------------------------------------------------------
@@ -80,7 +78,42 @@ exit;
  * is that the tests folder is in the same directory as the application
  * folder.  If it is not, update the path accordingly.
  */
-	$application_folder = dirname(__FILE__) . "/../..";
+	$application_folder = dirname(__FILE__) . '/../..';
+		
+/*
+ *---------------------------------------------------------------
+ * VIEW FOLDER NAME
+ *---------------------------------------------------------------
+ * 
+ * If you want to move the view folder out of the application 
+ * folder set the path to the folder here. The folder can be renamed
+ * and relocated anywhere on your server. If blank, it will default 
+ * to the standard location inside your application folder.  If you 
+ * do move this, use the full server path to this folder 
+ *
+ * NO TRAILING SLASH!
+ *
+ */
+	$view_folder = '';	
+
+
+/*
+ * -------------------------------------------------------------------
+ *  CUSTOM CONFIG VALUES
+ * -------------------------------------------------------------------
+ *
+ * The $assign_to_config array below will be passed dynamically to the
+ * config class when initialized. This allows you to set custom config
+ * items or override any default config values found in the config.php file.
+ * This can be handy as it permits you to share one application between
+ * multiple front controller files, with each file containing different
+ * config values.
+ *
+ * Un-comment the $assign_to_config array below to use this feature
+ *
+ */
+	// $assign_to_config['name_of_config_item'] = 'value of config item';
+
 
 /**
  * --------------------------------------------------------------
@@ -105,16 +138,24 @@ exit;
  */
 	$tests_folder = dirname(__FILE__) . "/../../../tests";
 
+
+
 // --------------------------------------------------------------------
 // END OF USER CONFIGURABLE SETTINGS.  DO NOT EDIT BELOW THIS LINE
 // --------------------------------------------------------------------
-
 
 /*
  * ---------------------------------------------------------------
  *  Resolve the system path for increased reliability
  * ---------------------------------------------------------------
  */
+
+	// Set the current directory correctly for CLI requests
+	if (defined('STDIN'))
+	{
+		chdir(dirname(__FILE__));
+	}
+
 	if (realpath($system_path) !== FALSE)
 	{
 		$system_path = realpath($system_path).'/';
@@ -122,7 +163,7 @@ exit;
 
 	// ensure there's a trailing slash
 	$system_path = rtrim($system_path, '/').'/';
-	
+
 	// Is the system path correct?
 	if ( ! is_dir($system_path))
 	{
@@ -138,6 +179,7 @@ exit;
 	define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 	// The PHP file extension
+	// this global constant is deprecated.
 	define('EXT', '.php');
 
 	// Path to the system folder
@@ -153,7 +195,7 @@ exit;
 	// The path to the "application" folder
 	if (is_dir($application_folder))
 	{
-		define('APPPATH', $application_folder.'/');
+		define('APPPATH', realpath($application_folder) . '/');
 	}
 	else
 	{
@@ -162,7 +204,22 @@ exit;
 			exit("Your application folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
 		}
 
-		define('APPPATH', BASEPATH.$application_folder.'/');
+		define('APPPATH', realpath(BASEPATH.$application_folder) . '/');
+	}
+	
+	// The path to the "views" folder
+	if (is_dir($view_folder)) 
+	{
+		define ('VIEWPATH', $view_folder .'/');
+	}
+	else 
+	{
+		if ( ! is_dir(APPPATH.'views/'))
+		{
+			exit("Your view folder path does not appear to be set correctly. Please open the following file and correct this: ".SELF);
+		}
+				
+		define ('VIEWPATH', APPPATH.'views/' );	
 	}
 	
 	// The path to CIUnit
@@ -182,16 +239,19 @@ exit;
 	
 	
 	// The path to the Tests folder
-	define('TESTSPATH', $tests_folder . '/');
+	define('TESTSPATH', realpath($tests_folder) . '/');
 
 /*
  * --------------------------------------------------------------------
- * LOAD THE BOOTSTRAP FILES
+ * LOAD THE BOOTSTRAP FILE
  * --------------------------------------------------------------------
+ *
+ * And away we go...
+ *
  */
 
 // Load the CIUnit CodeIgniter Core
-require_once CIUPATH . 'core/CodeIgniter' . EXT;
+require_once CIUPATH . 'core/CodeIgniter.php';
 
 // Autoload the PHPUnit Framework
 require_once ('PHPUnit/Autoload.php');
