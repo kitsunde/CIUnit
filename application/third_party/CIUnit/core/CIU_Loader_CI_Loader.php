@@ -19,12 +19,13 @@ class CIU_Loader extends CI_Loader {
 	 *
 	 * @param	string
 	 * @param	string
+	 * @param	bool
 	 * @param	string	an optional object name
 	 * @return	null
 	 */
 	protected function _ci_init_class($class, $prefix = '', $config = FALSE, $object_name = NULL)
 	{
-		// Is there an associated config file for this class? Note: these should always be lowercase
+		// Is there an associated config file for this class?  Note: these should always be lowercase
 		if ($config === NULL)
 		{
 			// Fetch the config paths containing any package paths
@@ -41,22 +42,22 @@ class CIU_Loader extends CI_Loader {
 					// first, global next
 					if (defined('ENVIRONMENT') AND file_exists($path .'config/'.ENVIRONMENT.'/'.strtolower($class).'.php'))
 					{
-						include_once($path .'config/'.ENVIRONMENT.'/'.strtolower($class).'.php');
+						include($path .'config/'.ENVIRONMENT.'/'.strtolower($class).'.php');
 						break;
 					}
 					elseif (defined('ENVIRONMENT') AND file_exists($path .'config/'.ENVIRONMENT.'/'.ucfirst(strtolower($class)).'.php'))
 					{
-						include_once($path .'config/'.ENVIRONMENT.'/'.ucfirst(strtolower($class)).'.php');
+						include($path .'config/'.ENVIRONMENT.'/'.ucfirst(strtolower($class)).'.php');
 						break;
 					}
 					elseif (file_exists($path .'config/'.strtolower($class).'.php'))
 					{
-						include_once($path .'config/'.strtolower($class).'.php');
+						include($path .'config/'.strtolower($class).'.php');
 						break;
 					}
 					elseif (file_exists($path .'config/'.ucfirst(strtolower($class)).'.php'))
 					{
-						include_once($path .'config/'.ucfirst(strtolower($class)).'.php');
+						include($path .'config/'.ucfirst(strtolower($class)).'.php');
 						break;
 					}
 				}
@@ -91,7 +92,7 @@ class CIU_Loader extends CI_Loader {
 		}
 
 		// Set the variable name we will assign the class to
-		// Was a custom class name supplied? If so we'll use it
+		// Was a custom class name supplied?  If so we'll use it
 		$class = strtolower($class);
 
 		if (is_null($object_name))
@@ -105,6 +106,7 @@ class CIU_Loader extends CI_Loader {
 
 		// Save the class name and object name
 		$this->_ci_classes[$class] = $classvar;
+
 		// Instantiate the class
 		$CI =& get_instance();
 		if ($config !== NULL)
@@ -130,98 +132,6 @@ class CIU_Loader extends CI_Loader {
 				//redesignme: check if we have got one already..
 				$CI->$classvar = new $name;
 			}
-		}
-	}
-
-	// --------------------------------------------------------------------
-
-	/**
-	 * Autoloader
-	 *
-	 * The config/autoload.php file contains an array that permits sub-systems,
-	 * libraries, and helpers to be loaded automatically.
-	 *
-	 * This function is public, as it's used in the CI_Controller class.
-	 * However, there is no reason you should ever needs to use it.
-	 *
-	 * @param	array
-	 * @return	void
-	 */
-	public function ci_autoloader()
-	{
-		if (defined('ENVIRONMENT') AND file_exists(APPPATH.'config/'.ENVIRONMENT.'/autoload.php'))
-		{
-			// enable multiple autoload during tests
-			include(APPPATH.'config/'.ENVIRONMENT.'/autoload.php');
-		}
-		else
-		{
-			// enable multiple autoload during tests
-			include(APPPATH.'config/autoload.php');
-		}
-
-
-		if ( ! isset($autoload))
-		{
-			return FALSE;
-		}
-
-		// Autoload packages
-		if (isset($autoload['packages']))
-		{
-			foreach ($autoload['packages'] as $package_path)
-			{
-				$this->add_package_path($package_path);
-			}
-		}
-
-		// Load any custom config file
-		if (count($autoload['config']) > 0)
-		{
-			$CI =& get_instance();
-			foreach ($autoload['config'] as $key => $val)
-			{
-				$CI->config->load($val);
-			}
-		}
-
-		// Autoload helpers and languages
-		foreach (array('helper', 'language') as $type)
-		{
-			if (isset($autoload[$type]) AND count($autoload[$type]) > 0)
-			{
-				$this->$type($autoload[$type]);
-			}
-		}
-
-		// A little tweak to remain backward compatible
-		// The $autoload['core'] item was deprecated
-		if ( ! isset($autoload['libraries']) AND isset($autoload['core']))
-		{
-			$autoload['libraries'] = $autoload['core'];
-		}
-
-		// Load libraries
-		if (isset($autoload['libraries']) AND count($autoload['libraries']) > 0)
-		{
-			// Load the database driver.
-			if (in_array('database', $autoload['libraries']))
-			{
-				$this->database();
-				$autoload['libraries'] = array_diff($autoload['libraries'], array('database'));
-			}
-
-			// Load all other libraries
-			foreach ($autoload['libraries'] as $item)
-			{
-				$this->library($item);
-			}
-		}
-
-		// Autoload models
-		if (isset($autoload['model']))
-		{
-			$this->model($autoload['model']);
 		}
 	}
 
