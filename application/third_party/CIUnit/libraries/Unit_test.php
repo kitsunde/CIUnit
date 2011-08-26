@@ -141,7 +141,7 @@ class CI_Unit_test {
 		}
 
 		$CI =& get_instance();
-		$CI->load->language('unit_test');
+
 
 		$this->_parse_template();
 
@@ -149,6 +149,8 @@ class CI_Unit_test {
 		
 		if (php_sapi_name() !== 'cli')
 		{
+			$CI->load->language('unit_test');
+			
 			foreach ($result as $res)
 			{
 				$table = '';
@@ -180,6 +182,8 @@ class CI_Unit_test {
 		}
 		else
 		{
+			$CI->load->language('unit_test', 'english');	// force english
+			
 			$passed = 0;
 			$failed = 0;
 			$failed_test = array();
@@ -260,7 +264,15 @@ class CI_Unit_test {
 	function result($results = array())
 	{
 		$CI =& get_instance();
-		$CI->load->language('unit_test');
+
+		if (php_sapi_name() === 'cli')
+		{
+			$CI->load->language('unit_test', 'english');	// force english
+		}
+		else
+		{
+			$CI->load->language('unit_test');
+		}
 
 		if (count($results) == 0)
 		{
