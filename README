@@ -8,6 +8,8 @@ CIUnit Foostack
 
 Notes:
     - CIUnit was updated to work completely with CodeIgniter 2.0.3.
+    	For CodeIgniter 2.0.3 users, please use branch "CI 2.0.3"
+    		https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip
     	See also: https://bitbucket.org/kenjis/my-ciunit/wiki/Home
     	
     - CIUnit is completely separated from the CodeIgniter Core Files.
