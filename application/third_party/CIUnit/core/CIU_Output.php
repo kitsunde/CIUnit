@@ -278,5 +278,5 @@ class CIU_Output extends CI_Output {
 	// --------------------------------------------------------------------
 }
 
-/* End of file CIU_Output_CI_Output.php */
-/* Location: ./application/third_party/CIUnit/core/CIU_Output_CI_Output.php */
+/* End of file CIU_Output.php */
+/* Location: ./application/third_party/CIUnit/core/CIU_Output.php */
