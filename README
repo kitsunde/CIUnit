@@ -34,6 +34,10 @@ How to Use:
 		$ cp -R ciunit/application [CI2 Project Path]/
 		$ cp -R ciunit/tests [CI2 Project Path]/
 		
+		If you use MY_Loader, MY_Output, MY_Session, please change the parent classes below:
+			- application/third_party/CIUnit/core/CIU_*.php
+			- application/third_party/CIUnit/libraries/CIU_*.php
+		
 	Run Tests:
 		All Tests:
 			$ cd [CI2 Project Path]/tests
