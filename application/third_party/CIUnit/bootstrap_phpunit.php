@@ -261,7 +261,7 @@ require_once CIUPATH. 'libraries/CIUnit.php';
 
 //=== and off we go ===
 $CI =& set_controller('CIU_Controller', CIUPATH . 'core/');
-$CI->load->add_package_path(APPPATH.'third_party/CIUnit/');
+$CI->load->add_package_path(CIUPATH);
 
 require_once(CIUPATH . 'libraries/spyc/spyc.php');
 
