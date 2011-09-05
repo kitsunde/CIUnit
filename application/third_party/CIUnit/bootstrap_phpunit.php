@@ -150,11 +150,13 @@ exit;
  * ---------------------------------------------------------------
  */
 
+/* This chdir() causes error when run tests by folder.
 	// Set the current directory correctly for CLI requests
 	if (defined('STDIN'))
 	{
 		chdir(dirname(__FILE__));
 	}
+*/
 
 	if (realpath($system_path) !== FALSE)
 	{
