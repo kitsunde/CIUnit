@@ -29,16 +29,23 @@ Notes:
 			- application/third_party/CIUnit/bootstrap_phpunit.php (Application and System Folder)
 			- tests/phpunit.xml (Optional: only edit if you want to move bootstrap_phpunit.php)
 
-How to Use:
-	Install:
-		$ cp -R ciunit/application [CI2 Project Path]/
-		$ cp -R ciunit/tests [CI2 Project Path]/
+Install:
+	Install by shell script:
+		$ cd ciunit
+		$ tools/install.sh CI2_Project_Path [DB_Name [DB_User [DB_Passwd [DB_host]]]]
 		
-		If you use MY_Loader, MY_Output, MY_Session, please change the parent classes below:
-			- application/third_party/CIUnit/core/CIU_*.php
-			- application/third_party/CIUnit/libraries/CIU_*.php
+	Install manually:
+		$ cp -R ciunit/application CI2_Project_Path/
+		$ cp -R ciunit/tests CI2_Project_Path/
 		
-	Run Tests:
+		create application/config/testing/database.php for database testing.
+		Database name must end with "_test".
+		
+	If you use MY_Loader, MY_Output, MY_Session, please change the parent classes below:
+		- application/third_party/CIUnit/core/CIU_*.php
+		- application/third_party/CIUnit/libraries/CIU_*.php
+		
+Run Tests:
 		All Tests:
 			$ cd [CI2 Project Path]/tests
 			$ phpunit
