@@ -402,6 +402,73 @@ class CIU_Loader extends CI_Loader {
 
 	// --------------------------------------------------------------------
 
+	/**
+	 * Load Helper
+	 *
+	 * This function loads the specified helper file.
+	 *
+	 * @param	mixed
+	 * @return	void
+	 */
+	public function helper($helpers = array())
+	{
+		foreach ($this->_ci_prep_filename($helpers, '_helper') as $helper)
+		{
+			if (isset($this->_ci_helpers[$helper]))
+			{
+				continue;
+			}
+
+			$ciu_helper =CIUPATH.'helpers/'.config_item('ciu_subclass_prefix').$helper.'.php';
+			
+			if (file_exists($ciu_helper))
+			{
+				include_once($ciu_helper);
+			}
+			
+			$ext_helper = APPPATH.'helpers/'.config_item('subclass_prefix').$helper.'.php';
+
+			// Is this a helper extension request?
+			if (file_exists($ext_helper))
+			{
+				$base_helper = BASEPATH.'helpers/'.$helper.'.php';
+
+				if ( ! file_exists($base_helper))
+				{
+					show_error('Unable to load the requested file: helpers/'.$helper.'.php');
+				}
+
+				include_once($ext_helper);
+				include_once($base_helper);
+
+				$this->_ci_helpers[$helper] = TRUE;
+				log_message('debug', 'Helper loaded: '.$helper);
+				continue;
+			}
+
+			// Try to load the helper
+			foreach ($this->_ci_helper_paths as $path)
+			{
+				if (file_exists($path.'helpers/'.$helper.'.php'))
+				{
+					include_once($path.'helpers/'.$helper.'.php');
+
+					$this->_ci_helpers[$helper] = TRUE;
+					log_message('debug', 'Helper loaded: '.$helper);
+					break;
+				}
+			}
+
+			// unable to load the helper
+			if ( ! isset($this->_ci_helpers[$helper]))
+			{
+				show_error('Unable to load the requested file: helpers/'.$helper.'.php');
+			}
+		}
+	}
+
+	// --------------------------------------------------------------------
+
 	/*
 	* Can load a view file from an absolute path and
 	* relative to the CodeIgniter index.php file

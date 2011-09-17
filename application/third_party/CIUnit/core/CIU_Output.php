@@ -91,6 +91,14 @@ class CIU_Output extends CI_Output {
 	}
 
 	/**
+	 * get headers
+	 */
+	function get_headers()
+	{
+		return $this->headers;
+	}
+
+	/**
 	* say
 	* like normal echo but puts it in the output_buffer first, so we still can set headers
 	* and post process it
