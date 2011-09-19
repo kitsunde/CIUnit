@@ -419,7 +419,7 @@ class CIU_Loader extends CI_Loader {
 				continue;
 			}
 
-			$ciu_helper =CIUPATH.'helpers/'.config_item('ciu_subclass_prefix').$helper.'.php';
+			$ciu_helper = CIUPATH.'helpers/'.config_item('ciu_subclass_prefix').$helper.'.php';
 			
 			if (file_exists($ciu_helper))
 			{
