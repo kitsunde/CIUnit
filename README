@@ -7,10 +7,10 @@ CIUnit Foostack
 	- Kenji "kenjis" Suzuki
 
 Notes:
+	- "default" branch is for CodeIgniter 2.1.0.
+
 	- To CodeIgniter 2.0.3 users, please use "CI 2.0.3" branch.
 	  You can get the latest code from https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip
-
-	- "default" branch is for CodeIgniter 2.1.0-dev.
 
 	- Known Issues: See https://bitbucket.org/kenjis/my-ciunit/wiki/Home
 
