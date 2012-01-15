@@ -113,8 +113,6 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
 	 */
 	protected function dbfixt($table_fixtures)
 	{
-		$this->CI->db = $this->CI->config->item('db');
-		
 		if (is_array($table_fixtures))
 		{
 			$this->load_fixt($table_fixtures);
@@ -173,8 +171,6 @@ class CIUnit_TestCase extends PHPUnit_Framework_TestCase
 	 */
 	protected function dbfixt_unload(array $table_fixtures, $reverse = true)
 	{
-		// Get the reference to the database
-		$this->CI->db = $this->CI->config->item('db');
 		// Should we reverse the order of loading?
 		// Helps with truncating tables with foreign key dependencies.
 		if ($reverse)
