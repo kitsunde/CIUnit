@@ -12,7 +12,7 @@ Modified and Updated by:
 ## Notes:
 
 - "default" branch is for CodeIgniter 2.1.0.
-- To CodeIgniter 2.0.3 users, please use "CI 2.0.3" branch. You can get the latest code from https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip
+- To CodeIgniter 2.0.3 users, please use "CI 2.0.3" branch. You can get the latest code from [https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip](https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip)
 - Known Issues: See https://bitbucket.org/kenjis/my-ciunit/wiki/Home
 - CIUnit was updated to work completely with CodeIgniter 2.0.3.
 - CIUnit is completely separated from the CodeIgniter Core Files.
@@ -94,4 +94,4 @@ If more than one test fails, PHPUnit reports 1 failure, even if 100 fails occurr
 
 If you are not familiar to PHPUnit, below tutorial may help you.
 
-- How to use PHPUnit (CIUnit) with CodeIgniter 2.1.0 http://d.hatena.ne.jp/Kenji_s/20120117/1326763908
+- How to use PHPUnit (CIUnit) with CodeIgniter 2.1.0 [http://d.hatena.ne.jp/Kenji_s/20120117/1326763908](http://d.hatena.ne.jp/Kenji_s/20120117/1326763908)
