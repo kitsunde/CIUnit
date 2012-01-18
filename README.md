@@ -13,7 +13,7 @@ Modified and Updated by:
 
 - "default" branch is for CodeIgniter 2.1.0.
 - To CodeIgniter 2.0.3 users, please use "CI 2.0.3" branch. You can get the latest code from [https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip](https://bitbucket.org/kenjis/my-ciunit/get/CI%202.0.3.zip)
-- Known Issues: See https://bitbucket.org/kenjis/my-ciunit/wiki/Home
+- Known Issues: See [https://bitbucket.org/kenjis/my-ciunit/wiki/Home](https://bitbucket.org/kenjis/my-ciunit/wiki/Home)
 - CIUnit was updated to work completely with CodeIgniter 2.0.3.
 - CIUnit is completely separated from the CodeIgniter Core Files.
   * CIUnit has it's own modified core files and will load them only when needed (by using the console for instance).
