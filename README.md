@@ -92,6 +92,7 @@ If more than one test fails, PHPUnit reports 1 failure, even if 100 fails occurr
 
 ## Tutorial
 
-If you are not familiar to PHPUnit, below tutorial may help you.
+If you are not familiar with PHPUnit/CIUnit, tutorial below may help you.
 
 - How to use PHPUnit (CIUnit) with CodeIgniter 2.1.0 [http://d.hatena.ne.jp/Kenji_s/20120117/1326763908](http://d.hatena.ne.jp/Kenji_s/20120117/1326763908)
+- Database Testing of CodeIgniter Application with PHPUnit (CIUnit) [http://d.hatena.ne.jp/Kenji_s/20120118/1326848578](http://d.hatena.ne.jp/Kenji_s/20120118/1326848578)
