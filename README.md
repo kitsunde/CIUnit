@@ -1,5 +1,27 @@
 # CIUnit Foostack
 
+## ExampleS
+
+### Controller
+
+    class LoginActionTest extends CIUnit_TestCase
+    {
+        public function setUp()
+        {
+            $this->CI = set_controller('login');
+        }
+
+        public function testLogin()
+        {
+            $_POST['useremail'] = 'kitsunde@example.org';
+            $_POST['password'] = '123';
+            $this->CI->login_action();
+            $out = output();
+            $this->assertRedirects($GLOBALS['OUT'], 'employee/index');
+        }
+    }
+
+
 ### Folder structure:
 - application/third_party/CIUnit/bootstrap_phpunit.php (Application and System Folder)
 - tests/phpunit.xml (Optional: only edit if you want to move bootstrap_phpunit.php)

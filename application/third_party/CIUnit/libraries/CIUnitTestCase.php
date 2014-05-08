@@ -6,14 +6,24 @@
 * Released under the MIT license, see:
 * http://www.opensource.org/licenses/mit-license.php
 */
+trait CIUnit_Assert
+{
+    public static function assertRedirects($ciOutput, $location, $message = 'Failed to assert redirect')
+    {
+        $haystack = $ciOutput->get_headers();
+        $needle = array("Location: " . site_url($location), TRUE);
+        $constraint = new PHPUnit_Framework_Constraint_TraversableContains($needle, TRUE);
 
+        self::assertThat($haystack, $constraint, $message);
+    }
+}
 /**
  * Extending the default phpUnit Framework_TestCase Class
  * providing eg. fixtures, custom assertions, utilities etc.
  */
 class CIUnit_TestCase extends PHPUnit_Framework_TestCase
 {
-	// ------------------------------------------------------------------------
+    use CIUnit_Assert;
 	
 	/**
 	 * An associative array of table names. The order of the fixtures
