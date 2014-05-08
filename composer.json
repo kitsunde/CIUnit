@@ -1,0 +1,9 @@
+{
+    "name": "Celc/ciunit",
+    "description": "CIUnit",
+    "minimum-stability": "dev",
+    "require": {
+        "phpunit/phpunit": "3.7.*",
+        "mustangostang/spyc": "0.5.*"
+    }
+}
