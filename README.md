@@ -1,14 +1,5 @@
 # CIUnit Foostack
 
-Originally created  by: Clemens "rafsoaken" Gruenberger
-
-Modified and Updated by:
-
-- Mario "Kuroir" Ricalde
-- Grzegorz "Grisha" Godlewski
-- Tatsuya Fukata
-- Kenji "kenjis" Suzuki
-
 ## Notes:
 
 - "default" branch is for CodeIgniter 2.1.0.
