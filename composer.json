@@ -3,7 +3,7 @@
     "description": "CIUnit",
     "minimum-stability": "dev",
     "require": {
-        "phpunit/phpunit": "3.7.*",
+        "phpunit/phpunit": "4.2.*",
         "mustangostang/spyc": "0.5.*"
     }
 }

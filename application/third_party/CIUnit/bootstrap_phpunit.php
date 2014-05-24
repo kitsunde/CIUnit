@@ -257,9 +257,6 @@ exit;
 // Load the CIUnit CodeIgniter Core
 require_once CIUPATH . 'core/CodeIgniter.php';
 
-// Autoload the PHPUnit Framework
-require_once ('PHPUnit/Autoload.php');
-
 // Load the CIUnit Framework
 require_once CIUPATH. 'libraries/CIUnit.php';
 
