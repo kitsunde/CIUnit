@@ -36,14 +36,6 @@ class CIU_Output extends CI_Output
     }
 
     /**
-     * Add to instead of replace final output
-     */
-    function add_output($str)
-    {
-        $this->final_output .= $str;
-    }
-
-    /**
      * Pop Output
      *
      * The final output the output class has stringed together is returned and truncated
@@ -118,7 +110,7 @@ class CIU_Output extends CI_Output
         if (ob_get_level() > $this->_ci_ob_level + 1) {
             ob_end_flush();
         } else {
-            $this->add_output(ob_get_contents());
+            $this->append_output(ob_get_contents());
             @ob_end_clean();
         }
     }

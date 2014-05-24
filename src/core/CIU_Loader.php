@@ -284,7 +284,7 @@ class CIU_Loader extends CI_Loader
 
         $output = $this->_ci_load(array('_ci_view' => $view, '_ci_vars' => $this->_ci_object_to_array($vars), '_ci_return' => TRUE));
         $CI =& get_instance();
-        $CI->output->add_output($output);
+        $CI->output->append_output($output);
     }
 
     // --------------------------------------------------------------------
