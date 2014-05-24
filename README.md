@@ -19,6 +19,13 @@
             $out = output();
             $this->assertRedirects($GLOBALS['OUT'], 'employee/index');
         }
+
+        public function testTemplateRendered()
+        {
+            $this->CI->login_action();
+            $views = output_views();
+            $this->assertContains('login', $views);
+        }
     }
 
 ## Install via composer

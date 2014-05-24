@@ -15,6 +15,7 @@
 
 class CIU_Output extends CI_Output
 {
+    public $views = array();
 
     function __construct()
     {
@@ -32,6 +33,26 @@ class CIU_Output extends CI_Output
             $arr = func_get_args();
         }
         $this->cookies[] = $arr;
+    }
+
+    /**
+     * Add the view name as output context.
+     *
+     * @param String $view
+     */
+    function append_view($view)
+    {
+        array_push($this->views, $view);
+    }
+
+    /**
+     * Get and reset the views.
+     *
+     * @return array
+     */
+    function get_views()
+    {
+        return $this->views;
     }
 
     /**

@@ -226,6 +226,14 @@ function output()
 }
 
 /**
+ * Returns the views that was rendered.
+ */
+function output_views()
+{
+    return CIUnit::$controller->output->get_views();
+}
+
+/**
  * retrieves the cached template vars from the loader class (stored here for assignment to views)
  * and resets them
  */
