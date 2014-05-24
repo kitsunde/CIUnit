@@ -1,6 +1,6 @@
 {
     "name": "celc/ciunit",
-    "description": "CIUnit",
+    "description": "Enables testing CodeIgniter 2.1 with PHPUnit",
     "minimum-stability": "dev",
     "require": {
         "phpunit/phpunit": "4.2.*",
