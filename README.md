@@ -1,6 +1,6 @@
-# CIUnit Foostack
+# CIUnit
 
-## ExampleS
+## Examples
 
 ### Controller
 
@@ -21,32 +21,18 @@
         }
     }
 
+## Add via composer
 
-### Folder structure:
-- application/third_party/CIUnit/bootstrap_phpunit.php (Application and System Folder)
-- tests/phpunit.xml (Optional: only edit if you want to move bootstrap_phpunit.php)
+    composer require Celc/ciunit dev-master
 
-## Install:
+Copy the example test directory into your project:
 
-### Install by shell script:
+    cp vendor/Celc/ciunit/tess <project-dir>
 
-	tools/install.sh CI2_Project_Path [DB_Name [DB_User [DB_Passwd [DB_host]]]]
-
-### Install manually:
-
-	cp -R ciunit/application CI2_Project_Path/
-	cp -R ciunit/tests CI2_Project_Path/
-
-create application/config/testing/database.php for database testing.
-Database name must end with "_test".
-
-If you use MY_Loader, MY_Output, MY_Session, please change the parent classes below:
-
-- application/third_party/CIUnit/core/CIU_*.php
-- application/third_party/CIUnit/libraries/CIU_*.php
+Create `application/config/testing/database.php` for database testing. The database name must end with "_test".
 
 ## Run Tests:
 
-Go into the `/tests` directory as normal with phpunit and run.
+From the `/tests` directory run:
 
 	phpunit
