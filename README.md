@@ -21,7 +21,7 @@
         }
     }
 
-## Add via composer
+## Install via composer
 
     composer require Celc/ciunit dev-master
 
