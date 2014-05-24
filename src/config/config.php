@@ -8,6 +8,3 @@
 */
 
 $config['ciu_subclass_prefix'] = 'CIU_';
-
-/* End of file config.php */
-/* Location ./application/third_party/CIUnit/config/config.php */
