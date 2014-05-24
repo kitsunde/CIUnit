@@ -19,7 +19,6 @@ class CIU_Output extends CI_Output
     function __construct()
     {
         parent::__construct();
-        $this->final_output = ''; //would be just set to 'null' in CI_Output
         $this->_ci_ob_level = ob_get_level();
         $this->cookies = array();
     }
