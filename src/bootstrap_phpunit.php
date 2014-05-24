@@ -3,13 +3,6 @@
 require_once '../vendor/autoload.php';
 
 /*
-echo '<pre>';
-var_dump($GLOBALS);
-echo '</pre>';
-exit;
-*/
-
-/*
  * ------------------------------------------------------
  *  CIUnit Version
  * ------------------------------------------------------
