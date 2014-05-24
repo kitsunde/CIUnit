@@ -1,9 +1,12 @@
 {
-    "name": "Celc/ciunit",
+    "name": "celc/ciunit",
     "description": "CIUnit",
     "minimum-stability": "dev",
     "require": {
         "phpunit/phpunit": "4.2.*",
         "mustangostang/spyc": "0.5.*"
+    },
+    "autoload": {
+        "classmap": [ "src/" ]
     }
 }
