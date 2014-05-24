@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit 
-    colors="true" 
-    stopOnFailure="false" 
-    bootstrap="../application/third_party/CIUnit/bootstrap_phpunit.php">
+<phpunit colors="true"
+         stopOnFailure="false"
+         bootstrap="../vendor/Celc/ciunit/src/bootstrap_phpunit.php">
     <php>
-        <server name="SERVER_NAME" value="http://example.com" />
+        <server name="SERVER_NAME" value="http://example.com"/>
     </php>
     <testsuites>
         <testsuite name="ControllerTests">
