@@ -1,12 +1,5 @@
-# Numerous always-ignore extensions
-*.lock
-
-# Other always-ignore files
 phpunit.xml
 
-# OS or Editor files/folders
-.DS_Store
-.idea
-
-# Folders to ignore
-vendor
+# Composer
+composer.lock
+vendor/
