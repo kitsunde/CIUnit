@@ -1,3 +1,44 @@
+# Numerous always-ignore extensions
+*.diff
+*.err
+*.orig
+*.lock
+*.log
+*.rej
+*.swo
+*.swp
+*.vi
+*~
+*.sass-cache
+
+# Other always-ignore files
+phpunit.xml
+
+# OS or Editor folders
 .DS_Store
-vendor/
-composer.lock
+Thumbs.db
+.cache
+.project
+.settings
+.tmproj
+*.esproj
+nbproject
+*.sublime-project
+*.sublime-workspace
+
+# Dreamweaver added files
+_notes
+dwsync.xml
+
+# Komodo
+*.komodoproject
+.komodotools
+
+# Folders to ignore
+.hg
+.svn
+.CVS
+intermediate
+.idea
+cache
+vendor
