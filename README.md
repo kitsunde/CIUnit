@@ -39,7 +39,7 @@ composer require Celc/ciunit dev-master
 Copy the example test directory into your project:
 
 ```bash
-cp vendor/Celc/ciunit/tess <project-dir>
+cp vendor/Celc/ciunit/tests <project-dir>
 ```
 
 Create `application/config/testing/database.php` for database testing. The database name must end with "_test".
