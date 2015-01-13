@@ -129,7 +129,7 @@ $ciunit_folder = dirname(__FILE__);
  *
  * This is the path to the tests folder.
  */
-$tests_folder = dirname(__FILE__) . "/../../../tests";
+$tests_folder = dirname(__FILE__) . "/../../../../tests";
 
 
 // --------------------------------------------------------------------
