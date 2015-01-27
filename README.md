@@ -36,18 +36,22 @@ class LoginActionTest extends CIUnit_TestCase
 composer require Celc/ciunit dev-master
 ```
 
-Copy the example test directory into your project:
+Copy the example test directory into the root of your project (same folder as `application` and `system`):
 
 ```bash
-cp vendor/Celc/ciunit/tests <project-dir>
+cp -R vendor/celc/ciunit/tests ./
 ```
 
-Create `application/config/testing/database.php` for database testing. The database name must end with "_test".
+Create `application/config/testing/database.php` for database testing. The database name must end with `_test`.
+
+## Writing tests
+
+The `tests` directory is an example. You are meant to replace the tests with your own.
 
 ## Run Tests:
 
-From the `/tests` directory run:
+From the `tests` directory run:
 
 ```bash
-phpunit
+../vendor/phpunit
 ```
