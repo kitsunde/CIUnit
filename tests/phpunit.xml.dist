@@ -5,6 +5,7 @@
          bootstrap="../vendor/Celc/ciunit/src/bootstrap_phpunit.php">
     <php>
         <server name="SERVER_NAME" value="http://example.com"/>
+        <server name="REMOTE_ADDR" value="127.0.0.1" />
     </php>
     <testsuites>
         <testsuite name="ControllerTests">
