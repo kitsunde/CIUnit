@@ -1,4 +1,6 @@
-# CIUnit
+# CIUnit for CodeIgniter 2
+
+**Note:** This is not compatible with CodeIgniter 3. The original creator of my-ciunit has a new project for that here: [https://github.com/kenjis/ci-phpunit-test](https://github.com/kenjis/ci-phpunit-test).
 
 ## Examples
 
