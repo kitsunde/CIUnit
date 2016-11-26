@@ -54,5 +54,6 @@ if (!function_exists('redirect')) {
                 $GLOBALS['OUT']->set_header("Location: " . $uri, TRUE, $http_response_code);
                 break;
         }
+        return array('uri' => $uri, 'method' => $method, 'http_response_code' => $http_response_code);
     }
 }
